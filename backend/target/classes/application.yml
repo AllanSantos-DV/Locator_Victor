@@ -1,0 +1,54 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: carrent-api
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # 24 horas em milissegundos
+      refresh-token:
+        expiration: 604800000 # 7 dias em milissegundos
+
+server:
+  servlet:
+    context-path: /api
+  forward-headers-strategy: native
+  error:
+    include-stacktrace: never
+    include-message: always
+    include-exception: false
+    include-binding-errors: always
+    whitelabel:
+      enabled: false
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 30
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  packages-to-scan: com.carrent.web.controller
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json

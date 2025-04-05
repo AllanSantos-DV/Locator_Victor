@@ -1,0 +1,43 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ['alertname', 'severity']
+  group_wait: 10s
+  group_interval: 5m
+  repeat_interval: 4h
+  receiver: 'email-notifications'
+
+receivers:
+  - name: 'email-notifications'
+    email_configs:
+      - to: '${ALERTMANAGER_EMAIL_TO}'
+        from: '${ALERTMANAGER_EMAIL_FROM}'
+        smarthost: '${ALERTMANAGER_EMAIL_SMARTHOST}'
+        auth_username: '${ALERTMANAGER_EMAIL_USERNAME}'
+        auth_password: '${ALERTMANAGER_EMAIL_PASSWORD}'
+        require_tls: true
+        send_resolved: true
+
+  - name: 'slack-notifications'
+    slack_configs:
+      - api_url: '${SLACK_WEBHOOK_URL}'
+        channel: '${SLACK_CHANNEL}'
+        send_resolved: true
+        title: '{{ template "slack.default.title" . }}'
+        text: '{{ template "slack.default.text" . }}'
+        actions:
+          - type: button
+            text: 'Ver no Grafana'
+            url: '{{ .CommonAnnotations.grafana_url }}'
+            style: '{{ if eq .CommonLabels.severity "critical" }}danger{{ else }}default{{ end }}'
+
+templates:
+  - '/etc/alertmanager/template/*.tmpl'
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname'] 

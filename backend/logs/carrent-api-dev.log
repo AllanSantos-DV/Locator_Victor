@@ -1,0 +1,340 @@
+2025-04-05 00:02:02 [http-nio-8080-exec-2] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 00:02:03 [http-nio-8080-exec-3] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 00:03:20 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 00:03:20 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-05 00:03:20 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-05 00:03:33 [main] INFO  com.carrent.CarRentalApplication - Starting CarRentalApplication using Java 17.0.9 with PID 4284 (C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\target\classes started by Allan in C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend)
+2025-04-05 00:03:33 [main] INFO  com.carrent.CarRentalApplication - The following 1 profile is active: "dev"
+2025-04-05 00:03:35 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-05 00:03:35 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 115 ms. Found 4 JPA repository interfaces.
+2025-04-05 00:03:36 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-05 00:03:36 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-05 00:03:37 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-04-05 00:03:37 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2025-04-05 00:03:37 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3937 ms
+2025-04-05 00:03:37 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-05 00:03:38 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@bff764c
+2025-04-05 00:03:38 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-05 00:03:38 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 9.22.3 by Redgate
+2025-04-05 00:03:38 [main] INFO  o.f.c.i.license.VersionPrinter - See release notes here: https://rd.gt/416ObMi
+2025-04-05 00:03:38 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2025-04-05 00:03:38 [main] INFO  o.f.c.i.r.ResourceNameValidator - 1 SQL migrations were detected but not run because they did not follow the filename convention.
+2025-04-05 00:03:38 [main] INFO  o.f.c.i.r.ResourceNameValidator - Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
+2025-04-05 00:03:38 [main] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:mysql://servermysqlcn1.mysql.database.azure.com:3306/victor (MySQL 8.0)
+2025-04-05 00:03:38 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema `victor`: 9
+2025-04-05 00:03:38 [main] INFO  o.f.core.internal.command.DbMigrate - Schema `victor` is up to date. No migration necessary.
+2025-04-05 00:03:39 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-05 00:03:39 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-05 00:03:41 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 00:03:42 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-05 00:03:44 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/management'
+2025-04-05 00:03:45 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@72ced297, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@48afc141, org.springframework.security.web.context.SecurityContextHolderFilter@2235ab04, org.springframework.security.web.header.HeaderWriterFilter@12f4f654, org.springframework.web.filter.CorsFilter@21431d8a, org.springframework.security.web.authentication.logout.LogoutFilter@677f0c10, com.carrent.infrastructure.security.JwtAuthenticationFilter@74876292, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1b290d9a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@462d239a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@c0f3f78, org.springframework.security.web.session.SessionManagementFilter@6206f12d, org.springframework.security.web.access.ExceptionTranslationFilter@124a7bec, org.springframework.security.web.access.intercept.AuthorizationFilter@58c41a2e]
+2025-04-05 00:03:47 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2025-04-05 00:03:47 [main] INFO  com.carrent.CarRentalApplication - Started CarRentalApplication in 15.515 seconds (process running for 16.118)
+2025-04-05 00:03:56 [http-nio-8080-exec-3] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-05 00:04:01 [http-nio-8080-exec-5] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 00:04:02 [http-nio-8080-exec-6] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 00:08:11 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 00:08:11 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-05 00:08:11 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-05 00:08:23 [main] INFO  com.carrent.CarRentalApplication - Starting CarRentalApplication using Java 17.0.9 with PID 4548 (C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\target\classes started by Allan in C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend)
+2025-04-05 00:08:23 [main] INFO  com.carrent.CarRentalApplication - The following 1 profile is active: "dev"
+2025-04-05 00:08:25 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-05 00:08:26 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 112 ms. Found 4 JPA repository interfaces.
+2025-04-05 00:08:27 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-05 00:08:27 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-05 00:08:27 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-04-05 00:08:28 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2025-04-05 00:08:28 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3993 ms
+2025-04-05 00:08:28 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-05 00:08:29 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@bff764c
+2025-04-05 00:08:29 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-05 00:08:29 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 9.22.3 by Redgate
+2025-04-05 00:08:29 [main] INFO  o.f.c.i.license.VersionPrinter - See release notes here: https://rd.gt/416ObMi
+2025-04-05 00:08:29 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2025-04-05 00:08:29 [main] INFO  o.f.c.i.r.ResourceNameValidator - 1 SQL migrations were detected but not run because they did not follow the filename convention.
+2025-04-05 00:08:29 [main] INFO  o.f.c.i.r.ResourceNameValidator - Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
+2025-04-05 00:08:29 [main] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:mysql://servermysqlcn1.mysql.database.azure.com:3306/victor (MySQL 8.0)
+2025-04-05 00:08:29 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema `victor`: 9
+2025-04-05 00:08:29 [main] INFO  o.f.core.internal.command.DbMigrate - Schema `victor` is up to date. No migration necessary.
+2025-04-05 00:08:30 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-05 00:08:30 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-05 00:08:32 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 00:08:33 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-05 00:08:35 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/management'
+2025-04-05 00:08:36 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@13b0a2ef, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1783c60c, org.springframework.security.web.context.SecurityContextHolderFilter@1f0526fc, org.springframework.security.web.header.HeaderWriterFilter@4ec23ac, org.springframework.web.filter.CorsFilter@7dcadb11, org.springframework.security.web.authentication.logout.LogoutFilter@522c56e8, com.carrent.infrastructure.security.JwtAuthenticationFilter@74876292, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2ec5b8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7d241c26, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1172dc2c, org.springframework.security.web.session.SessionManagementFilter@530f0414, org.springframework.security.web.access.ExceptionTranslationFilter@30e0aaa0, org.springframework.security.web.access.intercept.AuthorizationFilter@7d49699]
+2025-04-05 00:08:39 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2025-04-05 00:08:39 [main] INFO  com.carrent.CarRentalApplication - Started CarRentalApplication in 16.094 seconds (process running for 16.71)
+2025-04-05 00:08:44 [http-nio-8080-exec-4] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-05 00:08:50 [http-nio-8080-exec-6] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 00:08:51 [http-nio-8080-exec-7] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 00:10:41 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 00:10:41 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-05 00:10:41 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-05 00:11:26 [main] INFO  com.carrent.CarRentalApplication - Starting CarRentalApplication using Java 17.0.9 with PID 17556 (C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\target\classes started by Allan in C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend)
+2025-04-05 00:11:26 [main] INFO  com.carrent.CarRentalApplication - The following 1 profile is active: "dev"
+2025-04-05 00:11:28 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-05 00:11:29 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 160 ms. Found 4 JPA repository interfaces.
+2025-04-05 00:11:31 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-05 00:11:31 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-05 00:11:31 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-04-05 00:11:31 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2025-04-05 00:11:31 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4793 ms
+2025-04-05 00:11:32 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-05 00:11:32 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@539dd2d0
+2025-04-05 00:11:32 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-05 00:11:32 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 9.22.3 by Redgate
+2025-04-05 00:11:32 [main] INFO  o.f.c.i.license.VersionPrinter - See release notes here: https://rd.gt/416ObMi
+2025-04-05 00:11:32 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2025-04-05 00:11:32 [main] INFO  o.f.c.i.r.ResourceNameValidator - 1 SQL migrations were detected but not run because they did not follow the filename convention.
+2025-04-05 00:11:32 [main] INFO  o.f.c.i.r.ResourceNameValidator - Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
+2025-04-05 00:11:32 [main] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:mysql://servermysqlcn1.mysql.database.azure.com:3306/victor (MySQL 8.0)
+2025-04-05 00:11:33 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema `victor`: 9
+2025-04-05 00:11:33 [main] INFO  o.f.core.internal.command.DbMigrate - Schema `victor` is up to date. No migration necessary.
+2025-04-05 00:11:34 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-05 00:11:34 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-05 00:11:36 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 00:11:37 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-05 00:11:39 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/management'
+2025-04-05 00:11:40 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4a3b95b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@49251807, org.springframework.security.web.context.SecurityContextHolderFilter@2d2da013, org.springframework.security.web.header.HeaderWriterFilter@19842883, org.springframework.web.filter.CorsFilter@45a98c98, org.springframework.security.web.authentication.logout.LogoutFilter@7d241c26, com.carrent.infrastructure.security.JwtAuthenticationFilter@1d691d4f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@22e9122a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2dae6c7c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7ccbf0d0, org.springframework.security.web.session.SessionManagementFilter@7a227967, org.springframework.security.web.access.ExceptionTranslationFilter@24fad029, org.springframework.security.web.access.intercept.AuthorizationFilter@522c56e8]
+2025-04-05 00:11:42 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2025-04-05 00:11:42 [main] INFO  com.carrent.CarRentalApplication - Started CarRentalApplication in 17.205 seconds (process running for 17.843)
+2025-04-05 00:11:47 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-05 00:11:52 [http-nio-8080-exec-5] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 00:11:53 [http-nio-8080-exec-6] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 00:13:22 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 00:13:22 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-05 00:13:22 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-05 00:13:34 [main] INFO  com.carrent.CarRentalApplication - Starting CarRentalApplication using Java 17.0.9 with PID 8232 (C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\target\classes started by Allan in C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend)
+2025-04-05 00:13:34 [main] INFO  com.carrent.CarRentalApplication - The following 1 profile is active: "dev"
+2025-04-05 00:13:36 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-05 00:13:36 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 118 ms. Found 4 JPA repository interfaces.
+2025-04-05 00:13:38 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-05 00:13:38 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-05 00:13:38 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-04-05 00:13:38 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2025-04-05 00:13:38 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4052 ms
+2025-04-05 00:13:39 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-05 00:13:39 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@74450c9b
+2025-04-05 00:13:39 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-05 00:13:40 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 9.22.3 by Redgate
+2025-04-05 00:13:40 [main] INFO  o.f.c.i.license.VersionPrinter - See release notes here: https://rd.gt/416ObMi
+2025-04-05 00:13:40 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2025-04-05 00:13:40 [main] INFO  o.f.c.i.r.ResourceNameValidator - 1 SQL migrations were detected but not run because they did not follow the filename convention.
+2025-04-05 00:13:40 [main] INFO  o.f.c.i.r.ResourceNameValidator - Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
+2025-04-05 00:13:40 [main] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:mysql://servermysqlcn1.mysql.database.azure.com:3306/victor (MySQL 8.0)
+2025-04-05 00:13:40 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema `victor`: 9
+2025-04-05 00:13:40 [main] INFO  o.f.core.internal.command.DbMigrate - Schema `victor` is up to date. No migration necessary.
+2025-04-05 00:13:41 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-05 00:13:41 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-05 00:13:43 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 00:13:44 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-05 00:13:46 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/management'
+2025-04-05 00:13:47 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2540e6f8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2254cdc0, org.springframework.security.web.context.SecurityContextHolderFilter@79a8aad6, org.springframework.security.web.header.HeaderWriterFilter@22e9122a, org.springframework.web.filter.CorsFilter@389498a6, org.springframework.security.web.authentication.logout.LogoutFilter@41709aa8, com.carrent.infrastructure.security.JwtAuthenticationFilter@20fdf45a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7a5ce089, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4eb7603f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7b1ddbcf, org.springframework.security.web.session.SessionManagementFilter@be77a08, org.springframework.security.web.access.ExceptionTranslationFilter@58bff50d, org.springframework.security.web.access.intercept.AuthorizationFilter@70629a15]
+2025-04-05 00:13:49 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2025-04-05 00:13:49 [main] INFO  com.carrent.CarRentalApplication - Started CarRentalApplication in 15.958 seconds (process running for 16.59)
+2025-04-05 00:13:57 [http-nio-8080-exec-3] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-05 00:14:02 [http-nio-8080-exec-6] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 00:14:04 [http-nio-8080-exec-7] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 00:15:54 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 00:15:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-05 00:15:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-05 00:16:08 [main] INFO  com.carrent.CarRentalApplication - Starting CarRentalApplication using Java 17.0.9 with PID 14092 (C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\target\classes started by Allan in C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend)
+2025-04-05 00:16:08 [main] INFO  com.carrent.CarRentalApplication - The following 1 profile is active: "dev"
+2025-04-05 00:16:10 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-05 00:16:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 122 ms. Found 4 JPA repository interfaces.
+2025-04-05 00:16:12 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-05 00:16:12 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-05 00:16:12 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-04-05 00:16:13 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2025-04-05 00:16:13 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4312 ms
+2025-04-05 00:16:13 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-05 00:16:14 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@74f89bad
+2025-04-05 00:16:14 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-05 00:16:14 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 9.22.3 by Redgate
+2025-04-05 00:16:14 [main] INFO  o.f.c.i.license.VersionPrinter - See release notes here: https://rd.gt/416ObMi
+2025-04-05 00:16:14 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2025-04-05 00:16:14 [main] INFO  o.f.c.i.r.ResourceNameValidator - 1 SQL migrations were detected but not run because they did not follow the filename convention.
+2025-04-05 00:16:14 [main] INFO  o.f.c.i.r.ResourceNameValidator - Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
+2025-04-05 00:16:14 [main] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:mysql://servermysqlcn1.mysql.database.azure.com:3306/victor (MySQL 8.0)
+2025-04-05 00:16:14 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema `victor`: 9
+2025-04-05 00:16:14 [main] INFO  o.f.core.internal.command.DbMigrate - Schema `victor` is up to date. No migration necessary.
+2025-04-05 00:16:15 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-05 00:16:15 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-05 00:16:17 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 00:16:19 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-05 00:16:20 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/management'
+2025-04-05 00:16:22 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2540e6f8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2254cdc0, org.springframework.security.web.context.SecurityContextHolderFilter@79a8aad6, org.springframework.security.web.header.HeaderWriterFilter@22e9122a, org.springframework.web.filter.CorsFilter@389498a6, org.springframework.security.web.authentication.logout.LogoutFilter@41709aa8, com.carrent.infrastructure.security.JwtAuthenticationFilter@47511582, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7a5ce089, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4eb7603f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7b1ddbcf, org.springframework.security.web.session.SessionManagementFilter@be77a08, org.springframework.security.web.access.ExceptionTranslationFilter@58bff50d, org.springframework.security.web.access.intercept.AuthorizationFilter@70629a15]
+2025-04-05 00:16:24 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2025-04-05 00:16:24 [main] INFO  com.carrent.CarRentalApplication - Started CarRentalApplication in 16.58 seconds (process running for 17.236)
+2025-04-05 00:16:29 [http-nio-8080-exec-3] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-05 00:16:33 [http-nio-8080-exec-7] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 00:16:34 [http-nio-8080-exec-6] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 11:01:17 [main] INFO  com.carrent.CarRentalApplication - Starting CarRentalApplication using Java 17.0.12 with PID 8328 (C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\target\classes started by Allan in C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend)
+2025-04-05 11:01:17 [main] INFO  com.carrent.CarRentalApplication - The following 1 profile is active: "dev"
+2025-04-05 11:01:19 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-05 11:01:19 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 123 ms. Found 4 JPA repository interfaces.
+2025-04-05 11:01:21 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-05 11:01:21 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-05 11:01:21 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-04-05 11:01:22 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2025-04-05 11:01:22 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4777 ms
+2025-04-05 11:01:22 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-05 11:01:23 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@73e93c3a
+2025-04-05 11:01:23 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-05 11:01:23 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 9.22.3 by Redgate
+2025-04-05 11:01:23 [main] INFO  o.f.c.i.license.VersionPrinter - See release notes here: https://rd.gt/416ObMi
+2025-04-05 11:01:23 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2025-04-05 11:01:23 [main] INFO  o.f.c.i.r.ResourceNameValidator - 1 SQL migrations were detected but not run because they did not follow the filename convention.
+2025-04-05 11:01:23 [main] INFO  o.f.c.i.r.ResourceNameValidator - Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
+2025-04-05 11:01:23 [main] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:mysql://servermysqlcn1.mysql.database.azure.com:3306/victor (MySQL 8.0)
+2025-04-05 11:01:23 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema `victor`: 9
+2025-04-05 11:01:23 [main] INFO  o.f.core.internal.command.DbMigrate - Schema `victor` is up to date. No migration necessary.
+2025-04-05 11:01:24 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-05 11:01:24 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-05 11:01:26 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 11:01:28 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-05 11:01:30 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/management'
+2025-04-05 11:01:31 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3b9b3325, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6772f9c7, org.springframework.security.web.context.SecurityContextHolderFilter@7f5627cd, org.springframework.security.web.header.HeaderWriterFilter@6970ad8, org.springframework.web.filter.CorsFilter@c85cbf7, org.springframework.security.web.authentication.logout.LogoutFilter@4eb7521e, com.carrent.infrastructure.security.JwtAuthenticationFilter@41d34a11, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6354dd57, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@49a5c387, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2dec2b42, org.springframework.security.web.session.SessionManagementFilter@66860e08, org.springframework.security.web.access.ExceptionTranslationFilter@4b5951a3, org.springframework.security.web.access.intercept.AuthorizationFilter@4250e4f7]
+2025-04-05 11:01:33 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2025-04-05 11:01:33 [main] INFO  com.carrent.CarRentalApplication - Started CarRentalApplication in 17.536 seconds (process running for 22.242)
+2025-04-05 11:04:02 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-05 11:05:34 [http-nio-8080-exec-4] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 11:06:16 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 11:06:16 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-05 11:06:16 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-05 11:06:31 [main] INFO  com.carrent.CarRentalApplication - Starting CarRentalApplication using Java 17.0.12 with PID 4700 (C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\target\classes started by Allan in C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend)
+2025-04-05 11:06:31 [main] INFO  com.carrent.CarRentalApplication - The following 1 profile is active: "dev"
+2025-04-05 11:06:33 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-05 11:06:33 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 110 ms. Found 4 JPA repository interfaces.
+2025-04-05 11:06:35 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-05 11:06:35 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-05 11:06:35 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-04-05 11:06:35 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2025-04-05 11:06:35 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3952 ms
+2025-04-05 11:06:36 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-05 11:06:36 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@74d53d63
+2025-04-05 11:06:36 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-05 11:06:37 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 9.22.3 by Redgate
+2025-04-05 11:06:37 [main] INFO  o.f.c.i.license.VersionPrinter - See release notes here: https://rd.gt/416ObMi
+2025-04-05 11:06:37 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2025-04-05 11:06:37 [main] INFO  o.f.c.i.r.ResourceNameValidator - 1 SQL migrations were detected but not run because they did not follow the filename convention.
+2025-04-05 11:06:37 [main] INFO  o.f.c.i.r.ResourceNameValidator - Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
+2025-04-05 11:06:37 [main] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:mysql://servermysqlcn1.mysql.database.azure.com:3306/victor (MySQL 8.0)
+2025-04-05 11:06:37 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema `victor`: 9
+2025-04-05 11:06:37 [main] INFO  o.f.core.internal.command.DbMigrate - Schema `victor` is up to date. No migration necessary.
+2025-04-05 11:06:38 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-05 11:06:38 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-05 11:06:40 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 11:06:41 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-05 11:06:47 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/management'
+2025-04-05 11:06:48 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@625ee079, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@41df7a0c, org.springframework.security.web.context.SecurityContextHolderFilter@4f0e977a, org.springframework.security.web.header.HeaderWriterFilter@124a070c, org.springframework.web.filter.CorsFilter@72810bac, org.springframework.security.web.authentication.logout.LogoutFilter@4c28b19f, com.carrent.infrastructure.security.JwtAuthenticationFilter@7335414e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4c7df19b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5592d263, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@36792cff, org.springframework.security.web.session.SessionManagementFilter@3fd6caab, org.springframework.security.web.access.ExceptionTranslationFilter@42b4ce54, org.springframework.security.web.access.intercept.AuthorizationFilter@2a5ae8d4]
+2025-04-05 11:06:52 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2025-04-05 11:06:52 [main] INFO  com.carrent.CarRentalApplication - Started CarRentalApplication in 21.241 seconds (process running for 28.235)
+2025-04-05 11:08:20 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-05 11:09:18 [http-nio-8080-exec-1] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 11:12:57 [http-nio-8080-exec-2] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 11:13:22 [http-nio-8080-exec-3] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 11:44:54 [http-nio-8080-exec-4] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 11:45:31 [http-nio-8080-exec-5] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 11:45:51 [http-nio-8080-exec-6] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 11:46:37 [http-nio-8080-exec-7] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 11:46:42 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 11:46:42 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-05 11:46:42 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-05 11:46:47 [main] INFO  com.carrent.CarRentalApplication - Starting CarRentalApplication using Java 17.0.12 with PID 1652 (C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\target\classes started by Allan in C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend)
+2025-04-05 11:46:47 [main] INFO  com.carrent.CarRentalApplication - The following 1 profile is active: "dev"
+2025-04-05 11:46:49 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-05 11:46:50 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 116 ms. Found 4 JPA repository interfaces.
+2025-04-05 11:46:51 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-05 11:46:51 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-05 11:46:51 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-04-05 11:46:51 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2025-04-05 11:46:51 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3979 ms
+2025-04-05 11:46:52 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-05 11:46:53 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@22cb8e5f
+2025-04-05 11:46:53 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-05 11:46:53 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 9.22.3 by Redgate
+2025-04-05 11:46:53 [main] INFO  o.f.c.i.license.VersionPrinter - See release notes here: https://rd.gt/416ObMi
+2025-04-05 11:46:53 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2025-04-05 11:46:53 [main] INFO  o.f.c.i.r.ResourceNameValidator - 1 SQL migrations were detected but not run because they did not follow the filename convention.
+2025-04-05 11:46:53 [main] INFO  o.f.c.i.r.ResourceNameValidator - Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
+2025-04-05 11:46:53 [main] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:mysql://servermysqlcn1.mysql.database.azure.com:3306/victor (MySQL 8.0)
+2025-04-05 11:46:53 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema `victor`: 9
+2025-04-05 11:46:53 [main] INFO  o.f.core.internal.command.DbMigrate - Schema `victor` is up to date. No migration necessary.
+2025-04-05 11:46:54 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-05 11:46:54 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-05 11:46:56 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 11:46:57 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-05 11:47:00 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/management'
+2025-04-05 11:47:01 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@10224d43, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@323d09e7, org.springframework.security.web.context.SecurityContextHolderFilter@5355be84, org.springframework.security.web.header.HeaderWriterFilter@26eb6e87, org.springframework.web.filter.CorsFilter@139eed49, org.springframework.security.web.authentication.logout.LogoutFilter@3961c19f, com.carrent.infrastructure.security.JwtAuthenticationFilter@70916715, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1c2b6664, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5acb81ef, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@45fdd899, org.springframework.security.web.session.SessionManagementFilter@7072251c, org.springframework.security.web.access.ExceptionTranslationFilter@76991b36, org.springframework.security.web.access.intercept.AuthorizationFilter@4be5469e]
+2025-04-05 11:47:02 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2025-04-05 11:47:02 [main] INFO  com.carrent.CarRentalApplication - Started CarRentalApplication in 16.051 seconds (process running for 17.439)
+2025-04-05 11:47:03 [RMI TCP Connection(4)-26.155.97.206] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-05 11:47:17 [http-nio-8080-exec-1] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 11:47:32 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 11:47:32 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-05 11:47:32 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-05 11:47:43 [main] INFO  com.carrent.CarRentalApplication - Starting CarRentalApplication using Java 17.0.12 with PID 432 (C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\target\classes started by Allan in C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend)
+2025-04-05 11:47:43 [main] INFO  com.carrent.CarRentalApplication - The following 1 profile is active: "dev"
+2025-04-05 11:47:45 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-05 11:47:45 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 111 ms. Found 4 JPA repository interfaces.
+2025-04-05 11:47:47 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-05 11:47:47 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-05 11:47:47 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-04-05 11:47:47 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2025-04-05 11:47:47 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3879 ms
+2025-04-05 11:47:48 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-05 11:47:48 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@22cb8e5f
+2025-04-05 11:47:48 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-05 11:47:48 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 9.22.3 by Redgate
+2025-04-05 11:47:48 [main] INFO  o.f.c.i.license.VersionPrinter - See release notes here: https://rd.gt/416ObMi
+2025-04-05 11:47:48 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2025-04-05 11:47:48 [main] INFO  o.f.c.i.r.ResourceNameValidator - 1 SQL migrations were detected but not run because they did not follow the filename convention.
+2025-04-05 11:47:48 [main] INFO  o.f.c.i.r.ResourceNameValidator - Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
+2025-04-05 11:47:48 [main] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:mysql://servermysqlcn1.mysql.database.azure.com:3306/victor (MySQL 8.0)
+2025-04-05 11:47:49 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema `victor`: 9
+2025-04-05 11:47:49 [main] INFO  o.f.core.internal.command.DbMigrate - Schema `victor` is up to date. No migration necessary.
+2025-04-05 11:47:49 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-05 11:47:50 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-05 11:47:51 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 11:47:53 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-05 11:47:55 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/management'
+2025-04-05 11:47:56 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7d24645, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@642342bd, org.springframework.security.web.context.SecurityContextHolderFilter@3abad829, org.springframework.security.web.header.HeaderWriterFilter@1c79d400, org.springframework.web.filter.CorsFilter@56db546a, org.springframework.security.web.authentication.logout.LogoutFilter@41244e49, com.carrent.infrastructure.security.JwtAuthenticationFilter@76b06e50, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@72810bac, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@27812cca, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5492e623, org.springframework.security.web.session.SessionManagementFilter@142e0283, org.springframework.security.web.access.ExceptionTranslationFilter@229dfe7e, org.springframework.security.web.access.intercept.AuthorizationFilter@864ff30]
+2025-04-05 11:47:58 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2025-04-05 11:47:58 [main] INFO  com.carrent.CarRentalApplication - Started CarRentalApplication in 16.007 seconds (process running for 17.305)
+2025-04-05 11:47:59 [RMI TCP Connection(2)-26.155.97.206] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-05 11:48:18 [http-nio-8080-exec-2] ERROR c.c.w.e.GlobalExceptionHandler - Erro interno do servidor: Could not commit JPA transaction
+2025-04-05 11:57:53 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 11:57:53 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-05 11:57:53 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-05 11:58:03 [main] INFO  com.carrent.CarRentalApplication - Starting CarRentalApplication using Java 17.0.14 with PID 11576 (C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\target\classes started by Allan in C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend)
+2025-04-05 11:58:03 [main] INFO  com.carrent.CarRentalApplication - The following 1 profile is active: "dev"
+2025-04-05 11:58:04 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-05 11:58:05 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 103 ms. Found 4 JPA repository interfaces.
+2025-04-05 11:58:06 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-05 11:58:06 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-05 11:58:06 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-04-05 11:58:06 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2025-04-05 11:58:06 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3843 ms
+2025-04-05 11:58:07 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-05 11:58:08 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@39840986
+2025-04-05 11:58:08 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-05 11:58:08 [main] INFO  o.f.c.i.license.VersionPrinter - Flyway Community Edition 9.22.3 by Redgate
+2025-04-05 11:58:08 [main] INFO  o.f.c.i.license.VersionPrinter - See release notes here: https://rd.gt/416ObMi
+2025-04-05 11:58:08 [main] INFO  o.f.c.i.license.VersionPrinter - 
+2025-04-05 11:58:08 [main] INFO  o.f.c.i.r.ResourceNameValidator - 1 SQL migrations were detected but not run because they did not follow the filename convention.
+2025-04-05 11:58:08 [main] INFO  o.f.c.i.r.ResourceNameValidator - Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
+2025-04-05 11:58:08 [main] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:mysql://servermysqlcn1.mysql.database.azure.com:3306/victor (MySQL 8.0)
+2025-04-05 11:58:08 [main] INFO  o.f.core.internal.command.DbMigrate - Current version of schema `victor`: 9
+2025-04-05 11:58:08 [main] INFO  o.f.core.internal.command.DbMigrate - Schema `victor` is up to date. No migration necessary.
+2025-04-05 11:58:09 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-05 11:58:09 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-05 11:58:11 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 11:58:12 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-05 11:58:15 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/management'
+2025-04-05 11:58:16 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@549e0088, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7faf6a72, org.springframework.security.web.context.SecurityContextHolderFilter@62061bec, org.springframework.security.web.header.HeaderWriterFilter@1d3bca62, org.springframework.web.filter.CorsFilter@7683d1b2, org.springframework.security.web.authentication.logout.LogoutFilter@b2a102c, com.carrent.infrastructure.security.JwtAuthenticationFilter@e620893, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2cc814ed, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5f4163c8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2b37a0dd, org.springframework.security.web.session.SessionManagementFilter@19044e11, org.springframework.security.web.access.ExceptionTranslationFilter@40ffbed1, org.springframework.security.web.access.intercept.AuthorizationFilter@3162d486]
+2025-04-05 11:58:18 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2025-04-05 11:58:18 [main] INFO  com.carrent.CarRentalApplication - Started CarRentalApplication in 16.452 seconds (process running for 18.005)
+2025-04-05 12:00:16 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-05 12:00:16 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
