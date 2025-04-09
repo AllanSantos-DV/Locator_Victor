@@ -16,7 +16,7 @@ export const api = axios.create({
 api.interceptors.request.use(
   (requestConfig) => {
     // Tentar obter o token do localStorage
-    const tokenValue = localStorage.getItem('@CarRent:token');
+    const tokenValue = localStorage.getItem(config.api.tokenKey);
     
     // Se existir token, adicionar ao cabeçalho da requisição
     if (tokenValue) {
@@ -41,8 +41,8 @@ api.interceptors.response.use(
     // Verificar se o erro é por token expirado pelo header específico
     if (error.response?.headers?.['x-jwt-expired'] === 'true') {
       // Limpar tokens e redirecionar para login
-      localStorage.removeItem('@CarRent:token');
-      localStorage.removeItem('@CarRent:refreshToken');
+      localStorage.removeItem(config.api.tokenKey);
+      localStorage.removeItem(config.api.refreshTokenKey);
       localStorage.removeItem('@CarRent:user');
       
       // Redirecionar para login
@@ -59,7 +59,7 @@ api.interceptors.response.use(
       
       try {
         // Tentar renovar o token
-        const refreshToken = localStorage.getItem('@CarRent:refreshToken');
+        const refreshToken = localStorage.getItem(config.api.refreshTokenKey);
         
         if (!refreshToken) {
           throw new Error('Refresh token não disponível');
@@ -74,16 +74,16 @@ api.interceptors.response.use(
         
         // Armazenar os novos tokens
         const { token, refreshToken: newRefreshToken } = response.data;
-        localStorage.setItem('@CarRent:token', token);
-        localStorage.setItem('@CarRent:refreshToken', newRefreshToken);
+        localStorage.setItem(config.api.tokenKey, token);
+        localStorage.setItem(config.api.refreshTokenKey, newRefreshToken);
         
         // Atualizar o token na requisição original e retentar
         originalRequest.headers.Authorization = `Bearer ${token}`;
         return axios(originalRequest);
       } catch (refreshError) {
         // Se falhar o refresh, limpar tokens e redirecionar para login
-        localStorage.removeItem('@CarRent:token');
-        localStorage.removeItem('@CarRent:refreshToken');
+        localStorage.removeItem(config.api.tokenKey);
+        localStorage.removeItem(config.api.refreshTokenKey);
         localStorage.removeItem('@CarRent:user');
         
         // Se estiver em ambiente de navegador, redirecionar para login

@@ -13,7 +13,7 @@ export const config: {
   api: {
     baseURL: getEnv('REACT_APP_API_URL', 'http://localhost:8080'),
     timeout: parseInt(getEnv('REACT_APP_API_TIMEOUT', '15000'), 10),
-    tokenKey: '@CarRent:token',
-    refreshTokenKey: '@CarRent:refreshToken',
+    tokenKey: getEnv('REACT_APP_TOKEN_KEY', '@CarRent:token'),
+    refreshTokenKey: getEnv('REACT_APP_REFRESH_TOKEN_KEY', '@CarRent:refreshToken'),
   },
 }; 

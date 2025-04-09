@@ -22,6 +22,8 @@ import {
 } from '@mui/icons-material';
 import { api } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
+import { config } from '../utils/config';
+import { getEnv } from '../utils/env';
 
 // Função para garantir que as datas sejam formatadas corretamente
 const formatDate = (dateString: string): Date => {
@@ -74,7 +76,7 @@ export const Dashboard = () => {
       setError(null);
       
       try {
-        const token = localStorage.getItem('@CarRent:token');
+        const token = localStorage.getItem(config.api.tokenKey);
         
         if (!token) {
           setError('Sem token de autenticação. Faça login novamente.');
@@ -181,7 +183,7 @@ export const Dashboard = () => {
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h4" gutterBottom>
-        Bem-vindo, {user?.name ? user.name.split(' ')[0] : 'Usuário'}!
+        {getEnv('REACT_APP_WELCOME_TEXT', 'Bem-vindo')}, {user?.name ? user.name.split(' ')[0] : getEnv('REACT_APP_DEFAULT_USER_NAME', 'Usuário')}!
       </Typography>
 
       <Grid container spacing={3}>

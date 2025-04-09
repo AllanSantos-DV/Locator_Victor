@@ -1,6 +1,10 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { api } from '../services/api';
 import { jwtDecode } from 'jwt-decode';
+import { config } from '../utils/config';
+
+// Adicionar uma constante para a chave do usuário no localStorage
+const USER_STORAGE_KEY = '@CarRent:user';
 
 interface User {
   id: number;
@@ -32,9 +36,9 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
-    const token = localStorage.getItem('@CarRent:token');
-    const refreshToken = localStorage.getItem('@CarRent:refreshToken');
-    const userStr = localStorage.getItem('@CarRent:user');
+    const token = localStorage.getItem(config.api.tokenKey);
+    const refreshToken = localStorage.getItem(config.api.refreshTokenKey);
+    const userStr = localStorage.getItem(USER_STORAGE_KEY);
 
     if (token && userStr) {
       try {
@@ -47,9 +51,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
       } catch (error) {
         // Se houver erro ao fazer parse do JSON, limpar localStorage
-        localStorage.removeItem('@CarRent:token');
-        localStorage.removeItem('@CarRent:refreshToken');
-        localStorage.removeItem('@CarRent:user');
+        localStorage.removeItem(config.api.tokenKey);
+        localStorage.removeItem(config.api.refreshTokenKey);
+        localStorage.removeItem(USER_STORAGE_KEY);
       }
     }
 
@@ -72,9 +76,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { token, refreshToken, user } = response.data;
       
       // Armazenar token e dados do usuário
-      localStorage.setItem('@CarRent:token', token);
-      localStorage.setItem('@CarRent:refreshToken', refreshToken);
-      localStorage.setItem('@CarRent:user', JSON.stringify(user));
+      localStorage.setItem(config.api.tokenKey, token);
+      localStorage.setItem(config.api.refreshTokenKey, refreshToken);
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
       
       // Definir token para próximas requisições
       api.defaults.headers.Authorization = `Bearer ${token}`;
@@ -83,25 +87,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setData({ token, refreshToken, user });
     } catch (error) {
       // Limpar dados em caso de erro
-      localStorage.removeItem('@CarRent:token');
-      localStorage.removeItem('@CarRent:refreshToken');
-      localStorage.removeItem('@CarRent:user');
+      localStorage.removeItem(config.api.tokenKey);
+      localStorage.removeItem(config.api.refreshTokenKey);
+      localStorage.removeItem(USER_STORAGE_KEY);
       setData({ token: '', refreshToken: '', user: null });
       throw error;
     }
   }, []);
 
   const signOut = useCallback(() => {
-    localStorage.removeItem('@CarRent:token');
-    localStorage.removeItem('@CarRent:refreshToken');
-    localStorage.removeItem('@CarRent:user');
+    localStorage.removeItem(config.api.tokenKey);
+    localStorage.removeItem(config.api.refreshTokenKey);
+    localStorage.removeItem(USER_STORAGE_KEY);
 
     delete api.defaults.headers.Authorization;
     setData({ token: '', refreshToken: '', user: null });
   }, []);
 
   const updateUser = useCallback((user: User) => {
-    localStorage.setItem('@CarRent:user', JSON.stringify(user));
+    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
     setData(prev => ({ ...prev, user }));
   }, []);
 
@@ -113,8 +117,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const { token, refreshToken: newRefreshToken } = response.data;
 
-      localStorage.setItem('@CarRent:token', token);
-      localStorage.setItem('@CarRent:refreshToken', newRefreshToken);
+      localStorage.setItem(config.api.tokenKey, token);
+      localStorage.setItem(config.api.refreshTokenKey, newRefreshToken);
 
       api.defaults.headers.Authorization = `Bearer ${token}`;
 
