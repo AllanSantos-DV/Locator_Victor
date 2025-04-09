@@ -1,1 +1,6 @@
-.cursor/rules/developer-java.mdc
+.cursor
+.vscode
+.env
+.env.dev
+.env.prod
+.idea

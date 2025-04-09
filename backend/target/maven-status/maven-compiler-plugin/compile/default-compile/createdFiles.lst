@@ -14,10 +14,12 @@ com\carrent\application\dto\AuthenticationResponse.class
 com\carrent\application\dto\CustomerDTO$CustomerDTOBuilder.class
 com\carrent\domain\entity\User.class
 com\carrent\application\service\CustomerService.class
+com\carrent\web\controller\UserController.class
 com\carrent\infrastructure\security\JwtService.class
 com\carrent\infrastructure\interceptor\RateLimiterInterceptor.class
 com\carrent\domain\entity\VehicleStatus.class
 com\carrent\domain\exception\RentalNotFoundException.class
+com\carrent\domain\exception\UnauthorizedException.class
 com\carrent\domain\entity\Vehicle.class
 com\carrent\application\mapper\VehicleMapperImpl.class
 com\carrent\application\dto\AuthenticationRequest$AuthenticationRequestBuilder.class
@@ -52,6 +54,7 @@ com\carrent\infrastructure\config\JpaConfig.class
 com\carrent\web\controller\VehicleController.class
 com\carrent\domain\entity\Rental.class
 com\carrent\web\controller\AuthController.class
+com\carrent\application\dto\UpdateProfileRequest.class
 com\carrent\domain\exception\CustomerNotFoundException.class
 com\carrent\infrastructure\config\RateLimiterConfiguration.class
 com\carrent\infrastructure\aspect\RateLimiterAspect.class
@@ -61,6 +64,7 @@ com\carrent\application\dto\DashboardResponse$DashboardResponseBuilder.class
 com\carrent\domain\exception\VehicleNotFoundException.class
 com\carrent\domain\entity\Rental$RentalBuilder.class
 com\carrent\domain\exception\DuplicateResourceException.class
+com\carrent\application\dto\UpdateProfileRequest$UpdateProfileRequestBuilder.class
 com\carrent\application\service\VehicleService.class
 com\carrent\application\mapper\VehicleMapper.class
 com\carrent\application\service\AuthenticationService.class
