@@ -28,7 +28,7 @@ public class DashboardService {
         private final VehicleRepository vehicleRepository;
         private final CustomerRepository customerRepository;
         private final RentalRepository rentalRepository;
-        private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         private static final Logger log = LoggerFactory.getLogger(DashboardService.class);
 
         public DashboardResponse getDashboardData(int page, int size) {

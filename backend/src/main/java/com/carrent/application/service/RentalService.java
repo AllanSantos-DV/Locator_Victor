@@ -86,12 +86,24 @@ public class RentalService {
         Vehicle vehicle = findVehicleByPlate(rentalDTO.getVehiclePlate());
         Customer customer = findCustomerById(rentalDTO.getCustomerId());
 
+        // Verificar se o cliente já possui algum aluguel em andamento
+        if (rentalRepository.hasActiveRentals(customer.getId())) {
+            throw new IllegalStateException(
+                    "O cliente já possui um aluguel em andamento e não pode alugar outro veículo");
+        }
+
         Rental rental = rentalMapper.toEntity(rentalDTO);
         rental.setVehicle(vehicle);
         rental.setCustomer(customer);
         rental.setStatus(RentalStatus.PENDING);
         rental.setTotalAmount(
                 calculateTotalAmount(vehicle.getDailyRate(), rentalDTO.getStartDate(), rentalDTO.getEndDate()));
+
+        // Atualizar o status do veículo para RESERVED quando o aluguel for criado com
+        // status PENDING
+        // Manter a disponibilidade como true para permitir iniciar a locação
+        // posteriormente
+        vehicleRepository.updateStatus(VehicleStatus.RESERVED, true, vehicle.getId());
 
         Rental savedRental = rentalRepository.save(rental);
         return rentalMapper.toDTO(savedRental);
@@ -117,12 +129,15 @@ public class RentalService {
         rental.setTotalAmount(
                 calculateTotalAmount(vehicle.getDailyRate(), rentalDTO.getStartDate(), rentalDTO.getEndDate()));
 
+        // Garantir que o status do veículo seja RESERVED e disponível
+        vehicleRepository.updateStatus(VehicleStatus.RESERVED, true, vehicle.getId());
+
         Rental updatedRental = rentalRepository.save(rental);
         return rentalMapper.toDTO(updatedRental);
     }
 
     @Transactional
-    public RentalDTO startRental(Long id) {
+    public void startRental(Long id) {
         // Busca o aluguel com todas as entidades relacionadas
         Rental rental = rentalRepository.findByIdWithVehicleAndCustomer(id)
                 .orElseThrow(() -> new RentalNotFoundException(id));
@@ -132,28 +147,25 @@ public class RentalService {
             throw new IllegalStateException("Apenas locações pendentes podem ser iniciadas");
         }
 
-        // Valida a disponibilidade do veículo
+        // Verifica se o veículo foi carregado corretamente
         Vehicle vehicle = rental.getVehicle();
-        if (!vehicle.getAvailable()) {
-            throw new VehicleNotAvailableException("O veículo não está disponível");
+        if (vehicle == null) {
+            throw new IllegalStateException("Veículo não encontrado para o aluguel " + id);
         }
 
-        // Atualiza o status do aluguel e do veículo em uma única transação
-        rental.setStatus(RentalStatus.IN_PROGRESS);
-        vehicle.setAvailable(false);
-        vehicle.setStatus(VehicleStatus.RENTED);
+        // Não é mais necessário verificar a disponibilidade, pois veículos RESERVED
+        // permanecem disponíveis
 
-        // Salva o aluguel (o veículo será salvo automaticamente devido ao cascade)
-        rental = rentalRepository.save(rental);
+        // Atualiza o status do aluguel e do veículo diretamente no banco de dados
+        rentalRepository.updateStatus(RentalStatus.IN_PROGRESS, id);
+        vehicleRepository.updateStatus(VehicleStatus.RENTED, false, vehicle.getId());
 
         // Atualiza métricas
         metricsService.incrementActiveRentals();
-
-        return rentalMapper.toDTO(rental);
     }
 
     @Transactional
-    public RentalDTO completeRental(Long id) {
+    public void completeRental(Long id) {
         // Busca o aluguel com todas as entidades relacionadas
         Rental rental = rentalRepository.findByIdWithVehicleAndCustomer(id)
                 .orElseThrow(() -> new RentalNotFoundException(id));
@@ -163,51 +175,97 @@ public class RentalService {
             throw new IllegalStateException("Apenas locações em andamento podem ser finalizadas");
         }
 
-        // Atualiza o status do aluguel e do veículo em uma única transação
-        rental.setStatus(RentalStatus.COMPLETED);
-        rental.setActualReturnDate(LocalDateTime.now());
-
+        // Verifica se o veículo foi carregado corretamente
         Vehicle vehicle = rental.getVehicle();
-        vehicle.setAvailable(true);
-        vehicle.setStatus(VehicleStatus.AVAILABLE);
+        if (vehicle == null) {
+            throw new IllegalStateException("Veículo não encontrado para o aluguel " + id);
+        }
 
-        // Salva o aluguel (o veículo será salvo automaticamente devido ao cascade)
-        rental = rentalRepository.save(rental);
+        // Atualiza o status do aluguel e do veículo diretamente no banco de dados
+        rentalRepository.updateStatusAndReturnDate(RentalStatus.COMPLETED, LocalDateTime.now(), id);
+        vehicleRepository.updateStatus(VehicleStatus.AVAILABLE, true, vehicle.getId());
 
         // Atualiza métricas
         metricsService.decrementActiveRentals();
-
-        return rentalMapper.toDTO(rental);
     }
 
-
     @Transactional
-    public RentalDTO cancelRental(Long id) {
+    public void terminateRentalEarly(Long id) {
         // Busca o aluguel com todas as entidades relacionadas
         Rental rental = rentalRepository.findByIdWithVehicleAndCustomer(id)
                 .orElseThrow(() -> new RentalNotFoundException(id));
 
         // Valida o status do aluguel
-        if (rental.getStatus() != RentalStatus.PENDING && rental.getStatus() != RentalStatus.IN_PROGRESS) {
-            throw new IllegalStateException("Apenas locações pendentes ou em andamento podem ser canceladas");
+        if (rental.getStatus() != RentalStatus.IN_PROGRESS) {
+            throw new IllegalStateException("Apenas locações em andamento podem ser encerradas antecipadamente");
         }
 
-        // Atualiza o status do aluguel e do veículo em uma única transação
-        rental.setStatus(RentalStatus.CANCELLED);
-
+        // Verifica se o veículo foi carregado corretamente
         Vehicle vehicle = rental.getVehicle();
-        vehicle.setAvailable(true);
-        vehicle.setStatus(VehicleStatus.AVAILABLE);
-
-        // Salva o aluguel (o veículo será salvo automaticamente devido ao cascade)
-        rental = rentalRepository.save(rental);
-
-        // Atualiza métricas se necessário
-        if (rental.getStatus() == RentalStatus.IN_PROGRESS) {
-            metricsService.decrementActiveRentals();
+        if (vehicle == null) {
+            throw new IllegalStateException("Veículo não encontrado para o aluguel " + id);
         }
 
-        return rentalMapper.toDTO(rental);
+        // Cálculo dos valores
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startDate = rental.getStartDate();
+        LocalDateTime endDate = rental.getEndDate();
+        BigDecimal dailyRate = vehicle.getDailyRate();
+
+        // Calcular dias utilizados (do início até agora)
+        long daysUsed = ChronoUnit.DAYS.between(startDate, now) + 1; // +1 porque consideramos o dia atual
+        if (daysUsed <= 0)
+            daysUsed = 1; // Garantir pelo menos 1 dia
+
+        // Calcular o valor pelos dias utilizados
+        BigDecimal usedAmount = dailyRate.multiply(BigDecimal.valueOf(daysUsed));
+
+        // Calcular a multa (10% do valor utilizado)
+        BigDecimal terminationFee = usedAmount.multiply(BigDecimal.valueOf(0.1))
+                .setScale(2, RoundingMode.HALF_UP);
+
+        // Calcular o valor total (valor utilizado + multa)
+        BigDecimal newTotalAmount = usedAmount.add(terminationFee)
+                .setScale(2, RoundingMode.HALF_UP);
+
+        // Atualizar o aluguel
+        rentalRepository.updateForEarlyTermination(
+                RentalStatus.EARLY_TERMINATED,
+                now,
+                terminationFee,
+                newTotalAmount,
+                id);
+
+        // Liberar o veículo
+        vehicleRepository.updateStatus(VehicleStatus.AVAILABLE, true, vehicle.getId());
+
+        // Atualiza métricas
+        metricsService.decrementActiveRentals();
+    }
+
+    @Transactional
+    public void cancelRental(Long id) {
+        // Busca o aluguel com todas as entidades relacionadas
+        Rental rental = rentalRepository.findByIdWithVehicleAndCustomer(id)
+                .orElseThrow(() -> new RentalNotFoundException(id));
+
+        // Valida o status do aluguel - MODIFICADO
+        if (rental.getStatus() == RentalStatus.IN_PROGRESS) {
+            throw new IllegalStateException(
+                    "Aluguéis em andamento não podem ser cancelados. Use a função de encerramento antecipado.");
+        } else if (rental.getStatus() != RentalStatus.PENDING) {
+            throw new IllegalStateException("Apenas locações pendentes podem ser canceladas");
+        }
+
+        // Verificar se o veículo foi carregado corretamente
+        Vehicle vehicle = rental.getVehicle();
+        if (vehicle == null) {
+            throw new IllegalStateException("Veículo não encontrado para o aluguel " + id);
+        }
+
+        // Atualiza status diretamente no banco de dados
+        rentalRepository.updateStatus(RentalStatus.CANCELLED, id);
+        vehicleRepository.updateStatus(VehicleStatus.AVAILABLE, true, vehicle.getId());
     }
 
     @Transactional
@@ -218,16 +276,67 @@ public class RentalService {
             throw new IllegalStateException("Apenas locações pendentes podem ser excluídas");
         }
 
-        // Atualizar o veículo
-        Vehicle vehicle = rental.getVehicle();
-        vehicle.setAvailable(true);
-        vehicle.setStatus(VehicleStatus.AVAILABLE);
+        // Obter uma referência completa ao veículo (não um proxy)
+        Vehicle vehicle = vehicleRepository.findById(rental.getVehicle().getId())
+                .orElseThrow(() -> new IllegalStateException("Veículo não encontrado para o aluguel " + id));
 
-        // Salvar as alterações do veículo primeiro
-        vehicleRepository.save(vehicle);
+        // Atualizar status do veículo usando o método do repositório
+        vehicleRepository.updateStatus(VehicleStatus.AVAILABLE, true, vehicle.getId());
 
         // Depois excluir o aluguel
         rentalRepository.deleteById(id);
+    }
+
+    @Transactional
+    public RentalDTO extendRental(Long id, LocalDateTime newEndDate) {
+        Rental rental = findRentalById(id);
+
+        // Validar se o aluguel está em andamento
+        if (rental.getStatus() != RentalStatus.IN_PROGRESS) {
+            throw new IllegalStateException("Apenas aluguéis em andamento podem ser estendidos");
+        }
+
+        // Validar se a nova data está no futuro
+        LocalDateTime now = LocalDateTime.now();
+        if (newEndDate.isBefore(now)) {
+            throw new IllegalArgumentException("A nova data de término deve ser no futuro");
+        }
+
+        // Validar se a nova data é posterior à data de fim atual
+        if (newEndDate.isBefore(rental.getEndDate())) {
+            throw new IllegalArgumentException("A nova data de término deve ser posterior à data atual de fim");
+        }
+
+        // Verificar se não há conflitos com outros aluguéis para o mesmo veículo
+        Vehicle vehicle = rental.getVehicle();
+        if (vehicle == null) {
+            throw new IllegalStateException("Veículo não encontrado para o aluguel " + id);
+        }
+
+        // Verificar disponibilidade do veículo no novo período
+        List<RentalStatus> activeStatuses = List.of(RentalStatus.PENDING, RentalStatus.IN_PROGRESS);
+        List<Rental> overlappingRentals = rentalRepository.findOverlappingRentals(
+                vehicle.getId(),
+                rental.getEndDate(),
+                newEndDate,
+                id, // excluir o próprio aluguel atual
+                activeStatuses);
+
+        if (!overlappingRentals.isEmpty()) {
+            throw new VehicleNotAvailableException(
+                    "Não é possível estender o aluguel pois o veículo já está reservado para o período solicitado");
+        }
+
+        // Calcular novo valor total
+        BigDecimal dailyRate = vehicle.getDailyRate();
+        BigDecimal newTotalAmount = calculateTotalAmount(dailyRate, rental.getStartDate(), newEndDate);
+
+        // Atualizar a data de término e o valor total
+        rentalRepository.updateRentalEndDate(newEndDate, newTotalAmount, id);
+
+        // Recarregar o aluguel com os novos valores
+        Rental updatedRental = findRentalById(id);
+        return rentalMapper.toDTO(updatedRental);
     }
 
     private Rental findRentalById(Long id) {
@@ -250,6 +359,14 @@ public class RentalService {
 
         if (startDate.isBefore(now)) {
             throw new IllegalArgumentException("A data de início não pode ser no passado");
+        }
+
+        // Verificar se a data de início é hoje e se a hora é pelo menos 2 horas após a
+        // hora atual
+        LocalDateTime minStartTime = now.plusHours(2);
+        if (startDate.toLocalDate().equals(now.toLocalDate()) && startDate.isBefore(minStartTime)) {
+            throw new IllegalArgumentException(
+                    "Para aluguéis que iniciam hoje, o horário de início deve ser pelo menos 2 horas após o horário atual");
         }
 
         if (endDate.isBefore(startDate)) {
@@ -287,7 +404,16 @@ public class RentalService {
     }
 
     private BigDecimal calculateTotalAmount(BigDecimal dailyRate, LocalDateTime startDate, LocalDateTime endDate) {
-        long days = ChronoUnit.DAYS.between(startDate, endDate) + 1;
+        // Calcular dias (mesmo cálculo usado no frontend)
+        // A diferença em dias é arredondada para cima para considerar dias parciais
+        // como completos
+        long diffInMillis = Math.abs(endDate.toInstant(java.time.ZoneOffset.UTC).toEpochMilli() -
+                startDate.toInstant(java.time.ZoneOffset.UTC).toEpochMilli());
+        long days = (long) Math.ceil(diffInMillis / (1000.0 * 60 * 60 * 24));
+
+        // Para garantir que sempre seja cobrado pelo menos 1 dia
+        days = Math.max(1, days);
+
         return dailyRate.multiply(BigDecimal.valueOf(days)).setScale(2, RoundingMode.HALF_UP);
     }
 

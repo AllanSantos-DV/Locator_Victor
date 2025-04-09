@@ -2,19 +2,20 @@ spring:
   application:
     name: carrent-api
   datasource:
-    url: jdbc:mysql://servermysqlcn1.mysql.database.azure.com:3306/victor?useSSL=true&requireSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: userdb
-    password: admin@123
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useSSL=true&requireSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
       use-new-id-generator-mappings: false
     properties:
       hibernate:
         format_sql: true
-    show-sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: ${JPA_SHOW_SQL:false}
     open-in-view: false
   sql:
     init:
@@ -26,14 +27,19 @@ spring:
     enabled: true
     baseline-on-migrate: true
     locations: classpath:db/migration
-    validate-on-migrate: false
+    clean-disabled: false
+    validate-on-migrate: true
+    out-of-order: true
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
   security:
     jwt:
-      secret: ${JWT_SECRET:${application.security.jwt.secret-key}}
-      expiration: ${JWT_EXPIRATION:${application.security.jwt.expiration}}
+      secret: ${JWT_SECRET}
+      expiration: ${JWT_EXPIRATION}
 
 server:
-  port: 8080
+  port: ${APP_PORT:8080}
   servlet:
     context-path: /api
 
@@ -63,22 +69,22 @@ management:
 
 logging:
   level:
-    root: INFO
-    com.carrent: INFO
-    org.springframework.web: WARN
-    org.hibernate: WARN
-    org.hibernate.SQL: INFO
-    org.hibernate.type.descriptor.sql.BasicBinder: INFO
-    io.micrometer: WARN
+    root: ${LOG_LEVEL_ROOT:INFO}
+    com.carrent: ${LOG_LEVEL_APP:INFO}
+    org.springframework.web: ${LOG_LEVEL_SPRING_WEB:WARN}
+    org.hibernate: ${LOG_LEVEL_HIBERNATE:WARN}
+    org.hibernate.SQL: ${LOG_LEVEL_HIBERNATE_SQL:INFO}
+    org.hibernate.type.descriptor.sql.BasicBinder: ${LOG_LEVEL_HIBERNATE_BINDER:INFO}
+    io.micrometer: ${LOG_LEVEL_MICROMETER:WARN}
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   file:
-    name: logs/carrent-api-dev.log
+    name: ${LOG_FILE_PATH:logs/carrent-api-dev.log}
   logback:
     rollingpolicy:
-      max-file-size: 10MB
-      max-history: 30
+      max-file-size: ${LOG_MAX_FILE_SIZE:10MB}
+      max-history: ${LOG_MAX_HISTORY:30}
 
 springdoc:
   api-docs:

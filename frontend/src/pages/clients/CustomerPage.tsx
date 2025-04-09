@@ -64,12 +64,23 @@ export const CustomerPage: React.FC = () => {
         severity: 'success'
       });
       setDeleteDialogOpen(false);
-    } catch (error) {
-      setSnackbar({
-        open: true,
-        message: 'Erro ao excluir cliente. Tente novamente.',
-        severity: 'error'
-      });
+    } catch (error: any) {
+      // Verificar se é o erro específico de cliente com aluguéis ativos
+      const errorMessage = error.response?.data?.message || '';
+      
+      if (errorMessage.includes('aluguéis pendentes') || errorMessage.includes('em andamento')) {
+        setSnackbar({
+          open: true,
+          message: 'Não é possível excluir cliente com aluguéis pendentes ou em andamento',
+          severity: 'error'
+        });
+      } else {
+        setSnackbar({
+          open: true,
+          message: `Erro ao excluir cliente: ${errorMessage || 'Tente novamente.'}`,
+          severity: 'error'
+        });
+      }
     }
   };
 

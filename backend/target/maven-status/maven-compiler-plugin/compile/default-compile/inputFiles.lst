@@ -1,3 +1,4 @@
+C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\domain\exception\UnauthorizedException.java
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\domain\entity\VehicleCategory.java
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\application\service\UserDetailsServiceImpl.java
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\infrastructure\config\RateLimiterConfiguration.java
@@ -24,6 +25,7 @@ C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\car
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\application\dto\RegisterRequest.java
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\application\service\VehicleService.java
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\infrastructure\config\ActuatorConfig.java
+C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\application\dto\UpdateProfileRequest.java
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\application\dto\AuthenticationRequest.java
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\infrastructure\config\SecurityConfig.java
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\domain\entity\Customer.java
@@ -32,6 +34,7 @@ C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\car
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\application\service\AuthenticationService.java
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\domain\repository\RentalRepository.java
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\application\service\CustomerService.java
+C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\web\controller\UserController.java
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\application\mapper\VehicleMapper.java
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\domain\entity\RentalStatus.java
 C:\Users\Allan\Desktop\Allan\cursor\Locator_Victor\backend\src\main\java\com\carrent\domain\exception\VehicleNotFoundException.java

@@ -74,12 +74,20 @@ export const VehiclePage: React.FC = () => {
         severity: 'success'
       });
       setDeleteDialogOpen(false);
-    } catch (error) {
-      setSnackbar({
-        open: true,
-        message: 'Erro ao excluir veículo. Tente novamente.',
-        severity: 'error'
-      });
+    } catch (error: any) {
+      if (error.response?.data?.message?.includes('disponível')) {
+        setSnackbar({
+          open: true,
+          message: 'Apenas veículos com status DISPONÍVEL podem ser excluídos',
+          severity: 'error'
+        });
+      } else {
+        setSnackbar({
+          open: true,
+          message: `Erro ao excluir veículo: ${error.response?.data?.message || 'Tente novamente.'}`,
+          severity: 'error'
+        });
+      }
     }
   };
 

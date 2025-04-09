@@ -2,6 +2,8 @@ package com.carrent.web.controller;
 
 import com.carrent.application.dto.CustomerDTO;
 import com.carrent.application.service.CustomerService;
+import com.carrent.domain.entity.Customer;
+import com.carrent.domain.repository.RentalRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -14,6 +16,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -29,6 +33,7 @@ import java.util.List;
 public class CustomerController {
 
         private final CustomerService customerService;
+        private final RentalRepository rentalRepository;
 
         @GetMapping
         @Operation(summary = "Lista todos os clientes")
@@ -114,5 +119,11 @@ public class CustomerController {
         public ResponseEntity<Void> delete(@PathVariable Long id) {
                 customerService.delete(id);
                 return ResponseEntity.noContent().build();
+        }
+
+        @GetMapping("/{id}/active-rentals")
+        public ResponseEntity<Boolean> hasActiveRentals(@PathVariable Long id) {
+                boolean hasActiveRentals = rentalRepository.hasActiveRentals(id);
+                return ResponseEntity.ok(hasActiveRentals);
         }
 }

@@ -29,6 +29,7 @@ export const useVehicles = () => {
     mutationFn: vehicleService.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['vehicles'] });
+      queryClient.refetchQueries({ queryKey: ['vehicles'], type: 'all' });
     }
   });
 
@@ -38,6 +39,7 @@ export const useVehicles = () => {
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({ queryKey: ['vehicles'] });
       queryClient.invalidateQueries({ queryKey: ['vehicles', id] });
+      queryClient.refetchQueries({ queryKey: ['vehicles'], type: 'all' });
     }
   });
 
@@ -46,6 +48,7 @@ export const useVehicles = () => {
     onSuccess: (_, id) => {
       queryClient.invalidateQueries({ queryKey: ['vehicles'] });
       queryClient.invalidateQueries({ queryKey: ['vehicles', id] });
+      queryClient.refetchQueries({ queryKey: ['vehicles'], type: 'all' });
     }
   });
 
@@ -56,6 +59,9 @@ export const useVehicles = () => {
       queryClient.invalidateQueries({ queryKey: ['vehicles'] });
       queryClient.invalidateQueries({ queryKey: ['vehicles', id] });
       queryClient.invalidateQueries({ queryKey: ['vehicles', 'available'] });
+      
+      // Força o recarregamento de todas as consultas relacionadas a veículos
+      queryClient.refetchQueries({ queryKey: ['vehicles'], type: 'all' });
     }
   });
 

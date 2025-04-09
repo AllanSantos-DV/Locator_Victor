@@ -39,7 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (token && userStr) {
       try {
         const user = JSON.parse(userStr) as User;
-        api.defaults.headers.authorization = `Bearer ${token}`;
+        api.defaults.headers.Authorization = `Bearer ${token}`;
         return { 
           token, 
           refreshToken: refreshToken || '', 
@@ -77,7 +77,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.setItem('@CarRent:user', JSON.stringify(user));
       
       // Definir token para próximas requisições
-      api.defaults.headers.authorization = `Bearer ${token}`;
+      api.defaults.headers.Authorization = `Bearer ${token}`;
       
       // Atualizar estado
       setData({ token, refreshToken, user });
@@ -96,7 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('@CarRent:refreshToken');
     localStorage.removeItem('@CarRent:user');
 
-    delete api.defaults.headers.authorization;
+    delete api.defaults.headers.Authorization;
     setData({ token: '', refreshToken: '', user: null });
   }, []);
 

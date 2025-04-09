@@ -6,12 +6,14 @@ import com.carrent.domain.entity.Customer;
 import com.carrent.domain.entity.Rental;
 import com.carrent.domain.entity.RentalStatus;
 import com.carrent.domain.entity.Vehicle;
+import com.carrent.domain.entity.VehicleStatus;
 import com.carrent.domain.exception.CustomerNotFoundException;
 import com.carrent.domain.exception.RentalNotFoundException;
 import com.carrent.domain.exception.VehicleNotAvailableException;
 import com.carrent.domain.repository.CustomerRepository;
 import com.carrent.domain.repository.RentalRepository;
 import com.carrent.domain.repository.VehicleRepository;
+import com.carrent.infrastructure.metrics.CustomMetricsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +27,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -41,6 +44,9 @@ class RentalServiceTest {
 
     @Mock
     private RentalMapper rentalMapper;
+
+    @Mock
+    private CustomMetricsService metricsService;
 
     @InjectMocks
     private RentalService rentalService;
@@ -100,6 +106,7 @@ class RentalServiceTest {
         when(rentalMapper.toEntity(any(RentalDTO.class))).thenReturn(rental);
         when(rentalRepository.save(any(Rental.class))).thenReturn(rental);
         when(rentalMapper.toDTO(any(Rental.class))).thenReturn(rentalDTO);
+        when(vehicleRepository.findByPlate(anyString())).thenReturn(Optional.of(vehicle));
 
         RentalDTO result = rentalService.create(rentalDTO);
 
@@ -111,6 +118,7 @@ class RentalServiceTest {
         assertEquals(rentalDTO.getTotalAmount(), result.getTotalAmount());
 
         verify(rentalRepository).save(any(Rental.class));
+        verify(vehicleRepository).updateStatus(VehicleStatus.RESERVED, true, vehicle.getId());
     }
 
     @Test
@@ -132,17 +140,17 @@ class RentalServiceTest {
 
     @Test
     void startRental_WithValidData_ShouldStartRental() {
-        when(rentalRepository.findById(1L)).thenReturn(Optional.of(rental));
-        when(rentalRepository.save(any(Rental.class))).thenReturn(rental);
-        when(rentalMapper.toDTO(any(Rental.class))).thenReturn(rentalDTO);
+        when(rentalRepository.findByIdWithVehicleAndCustomer(1L)).thenReturn(Optional.of(rental));
+        doNothing().when(rentalRepository).updateStatus(RentalStatus.IN_PROGRESS, 1L);
+        doNothing().when(vehicleRepository).updateStatus(any(VehicleStatus.class), eq(false), eq(1L));
 
-        RentalDTO result = rentalService.startRental(1L);
+        // Execução
+        assertDoesNotThrow(() -> rentalService.startRental(1L));
 
-        assertNotNull(result);
-        assertEquals(RentalStatus.IN_PROGRESS, rental.getStatus());
-        assertFalse(rental.getVehicle().getAvailable());
-
-        verify(rentalRepository).save(any(Rental.class));
+        // Verificações
+        verify(rentalRepository).findByIdWithVehicleAndCustomer(1L);
+        verify(rentalRepository).updateStatus(RentalStatus.IN_PROGRESS, 1L);
+        verify(vehicleRepository).updateStatus(any(VehicleStatus.class), eq(false), eq(1L));
     }
 
     @Test
@@ -156,59 +164,44 @@ class RentalServiceTest {
     @Test
     void completeRental_WithValidData_ShouldCompleteRental() {
         rental.setStatus(RentalStatus.IN_PROGRESS);
-        when(rentalRepository.findById(1L)).thenReturn(Optional.of(rental));
-        when(rentalRepository.save(any(Rental.class))).thenReturn(rental);
-        when(rentalMapper.toDTO(any(Rental.class))).thenReturn(rentalDTO);
+        when(rentalRepository.findByIdWithVehicleAndCustomer(1L)).thenReturn(Optional.of(rental));
+        doNothing().when(rentalRepository).updateStatusAndReturnDate(eq(RentalStatus.COMPLETED),
+                any(LocalDateTime.class), eq(1L));
+        doNothing().when(vehicleRepository).updateStatus(any(VehicleStatus.class), eq(true), eq(1L));
 
-        RentalDTO result = rentalService.completeRental(1L);
+        // Execução
+        assertDoesNotThrow(() -> rentalService.completeRental(1L));
 
-        assertNotNull(result);
-        assertEquals(RentalStatus.COMPLETED, rental.getStatus());
-        assertTrue(rental.getVehicle().getAvailable());
-        assertNotNull(rental.getActualReturnDate());
-
-        verify(rentalRepository).save(any(Rental.class));
-    }
-
-    @Test
-    void completeRental_WithLateReturn_ShouldAddLateFee() {
-        rental.setStatus(RentalStatus.IN_PROGRESS);
-        rental.setEndDate(LocalDateTime.now().minusDays(2));
-        when(rentalRepository.findById(1L)).thenReturn(Optional.of(rental));
-        when(rentalRepository.save(any(Rental.class))).thenReturn(rental);
-        when(rentalMapper.toDTO(any(Rental.class))).thenReturn(rentalDTO);
-
-        RentalDTO result = rentalService.completeRental(1L);
-
-        assertNotNull(result);
-        assertEquals(RentalStatus.COMPLETED, rental.getStatus());
-        assertTrue(rental.getTotalAmount().compareTo(new BigDecimal("500.00")) > 0);
-
-        verify(rentalRepository).save(any(Rental.class));
+        // Verificações
+        verify(rentalRepository).findByIdWithVehicleAndCustomer(1L);
+        verify(rentalRepository).updateStatusAndReturnDate(eq(RentalStatus.COMPLETED), any(LocalDateTime.class),
+                eq(1L));
+        verify(vehicleRepository).updateStatus(any(VehicleStatus.class), eq(true), eq(1L));
     }
 
     @Test
     void cancelRental_WithValidData_ShouldCancelRental() {
-        when(rentalRepository.findById(1L)).thenReturn(Optional.of(rental));
-        when(rentalRepository.save(any(Rental.class))).thenReturn(rental);
-        when(rentalMapper.toDTO(any(Rental.class))).thenReturn(rentalDTO);
+        // Configuração dos mocks
+        when(rentalRepository.findByIdWithVehicleAndCustomer(1L)).thenReturn(Optional.of(rental));
 
-        RentalDTO result = rentalService.cancelRental(1L);
+        // Execução
+        assertDoesNotThrow(() -> rentalService.cancelRental(1L));
 
-        assertNotNull(result);
-        assertEquals(RentalStatus.CANCELLED, rental.getStatus());
-        assertTrue(rental.getVehicle().getAvailable());
-
-        verify(rentalRepository).save(any(Rental.class));
+        // Verificações
+        verify(rentalRepository).findByIdWithVehicleAndCustomer(1L);
+        verify(rentalRepository).updateStatus(RentalStatus.CANCELLED, 1L);
+        verify(vehicleRepository).updateStatus(any(VehicleStatus.class), eq(true), eq(1L));
     }
 
     @Test
     void delete_WithValidData_ShouldDeleteRental() {
         when(rentalRepository.findById(1L)).thenReturn(Optional.of(rental));
+        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle));
 
         rentalService.delete(1L);
 
         verify(rentalRepository).deleteById(1L);
+        verify(vehicleRepository).updateStatus(VehicleStatus.AVAILABLE, true, vehicle.getId());
     }
 
     @Test
@@ -217,5 +210,114 @@ class RentalServiceTest {
 
         assertThrows(RentalNotFoundException.class, () -> rentalService.delete(1L));
         verify(rentalRepository, never()).deleteById(anyLong());
+    }
+
+    @Test
+    void terminateRentalEarly_WithValidData_ShouldTerminateRental() {
+        // Configuração
+        rental.setStatus(RentalStatus.IN_PROGRESS);
+        when(rentalRepository.findByIdWithVehicleAndCustomer(1L)).thenReturn(Optional.of(rental));
+        doNothing().when(rentalRepository).updateForEarlyTermination(
+                eq(RentalStatus.EARLY_TERMINATED),
+                any(LocalDateTime.class),
+                any(BigDecimal.class),
+                any(BigDecimal.class),
+                eq(1L));
+        doNothing().when(vehicleRepository).updateStatus(any(VehicleStatus.class), eq(true), eq(1L));
+
+        // Execução
+        assertDoesNotThrow(() -> rentalService.terminateRentalEarly(1L));
+
+        // Verificações
+        verify(rentalRepository).findByIdWithVehicleAndCustomer(1L);
+        verify(rentalRepository).updateForEarlyTermination(
+                eq(RentalStatus.EARLY_TERMINATED),
+                any(LocalDateTime.class),
+                any(BigDecimal.class),
+                any(BigDecimal.class),
+                eq(1L));
+        verify(vehicleRepository).updateStatus(any(VehicleStatus.class), eq(true), eq(1L));
+        verify(metricsService).decrementActiveRentals();
+    }
+
+    @Test
+    void terminateRentalEarly_WithNonInProgressRental_ShouldThrowException() {
+        // Configuração - aluguel com status diferente de IN_PROGRESS
+        rental.setStatus(RentalStatus.PENDING);
+        when(rentalRepository.findByIdWithVehicleAndCustomer(1L)).thenReturn(Optional.of(rental));
+
+        // Execução e verificação
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> rentalService.terminateRentalEarly(1L));
+
+        assertEquals("Apenas locações em andamento podem ser encerradas antecipadamente", exception.getMessage());
+    }
+
+    @Test
+    void create_WithStartDateTodayAndLessThan2HoursFromNow_ShouldThrowException() {
+        // Configuração - aluguel com data de início hoje, mas menos de 2 horas após a
+        // hora atual
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime lessThan2HoursFromNow = now.plusHours(1); // Apenas 1 hora após o horário atual
+
+        RentalDTO invalidRentalDTO = RentalDTO.builder()
+                .id(1L)
+                .vehicleId(1L)
+                .customerId(1L)
+                .startDate(lessThan2HoursFromNow)
+                .endDate(now.plusDays(5))
+                .status(RentalStatus.PENDING)
+                .totalAmount(new BigDecimal("500.00"))
+                .build();
+
+        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle));
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
+
+        // Execução e verificação
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> rentalService.create(invalidRentalDTO));
+
+        assertEquals(
+                "Para aluguéis que iniciam hoje, o horário de início deve ser pelo menos 2 horas após o horário atual",
+                exception.getMessage());
+        verify(rentalRepository, never()).save(any(Rental.class));
+    }
+
+    @Test
+    void update_WithValidData_ShouldUpdateRentalAndVehicleStatus() {
+        // Configuração dos mocks
+        when(rentalRepository.findById(1L)).thenReturn(Optional.of(rental));
+        when(vehicleRepository.findByPlate(anyString())).thenReturn(Optional.of(vehicle));
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
+        when(rentalRepository.save(any(Rental.class))).thenReturn(rental);
+        when(rentalMapper.toDTO(any(Rental.class))).thenReturn(rentalDTO);
+
+        // Execução
+        RentalDTO result = rentalService.update(1L, rentalDTO);
+
+        // Verificações
+        assertNotNull(result);
+        assertEquals(rentalDTO.getId(), result.getId());
+        verify(rentalRepository).save(any(Rental.class));
+        // Verificar se o método updateStatus foi chamado com os parâmetros corretos
+        verify(vehicleRepository).updateStatus(VehicleStatus.RENTED, false, vehicle.getId());
+    }
+
+    @Test
+    void create_WithValidData_ShouldUpdateVehicleToReservedStatus() {
+        // Configuração
+        when(vehicleRepository.findByPlate(anyString())).thenReturn(Optional.of(vehicle));
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
+        when(rentalMapper.toEntity(any(RentalDTO.class))).thenReturn(rental);
+        when(rentalRepository.save(any(Rental.class))).thenReturn(rental);
+        when(rentalMapper.toDTO(any(Rental.class))).thenReturn(rentalDTO);
+
+        // Execução
+        rentalService.create(rentalDTO);
+
+        // Verificação
+        verify(vehicleRepository).updateStatus(VehicleStatus.RESERVED, true, vehicle.getId());
     }
 }

@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -167,45 +168,24 @@ class RentalControllerTest {
 
     @Test
     void startRental_ShouldStartRental() throws Exception {
-        when(rentalService.startRental(1L)).thenReturn(rentalDTO);
-
-        mockMvc.perform(post("/api/rentals/1/start"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.vehicleId").value(1))
-                .andExpect(jsonPath("$.customerId").value(1))
-                .andExpect(jsonPath("$.status").value("PENDING"))
-                .andExpect(jsonPath("$.totalAmount").value("700.00"));
+        mockMvc.perform(patch("/api/rentals/1/start"))
+                .andExpect(status().isNoContent());
 
         verify(rentalService).startRental(1L);
     }
 
     @Test
     void completeRental_ShouldCompleteRental() throws Exception {
-        when(rentalService.completeRental(1L)).thenReturn(rentalDTO);
-
-        mockMvc.perform(post("/api/rentals/1/complete"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.vehicleId").value(1))
-                .andExpect(jsonPath("$.customerId").value(1))
-                .andExpect(jsonPath("$.status").value("PENDING"))
-                .andExpect(jsonPath("$.totalAmount").value("700.00"));
+        mockMvc.perform(patch("/api/rentals/1/complete"))
+                .andExpect(status().isNoContent());
 
         verify(rentalService).completeRental(1L);
     }
 
     @Test
     void cancelRental_ShouldCancelRental() throws Exception {
-        when(rentalService.cancelRental(1L)).thenReturn(rentalDTO);
-
-        mockMvc.perform(post("/api/rentals/1/cancel"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.vehicleId").value(1))
-                .andExpect(jsonPath("$.customerId").value(1))
-                .andExpect(jsonPath("$.status").value("PENDING"))
-                .andExpect(jsonPath("$.totalAmount").value("700.00"));
+        mockMvc.perform(patch("/api/rentals/1/cancel"))
+                .andExpect(status().isNoContent());
 
         verify(rentalService).cancelRental(1L);
     }

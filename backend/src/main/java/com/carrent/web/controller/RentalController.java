@@ -117,36 +117,66 @@ public class RentalController {
     @PatchMapping("/{id}/start")
     @Operation(summary = "Inicia um aluguel")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Aluguel iniciado com sucesso", content = @Content(schema = @Schema(implementation = RentalDTO.class))),
+            @ApiResponse(responseCode = "204", description = "Aluguel iniciado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Aluguel não encontrado"),
             @ApiResponse(responseCode = "400", description = "Aluguel não pode ser iniciado")
     })
     @Parameter(name = "id", description = "ID do aluguel", required = true)
-    public ResponseEntity<RentalDTO> startRental(@PathVariable Long id) {
-        return ResponseEntity.ok(rentalService.startRental(id));
+    public ResponseEntity<Void> startRental(@PathVariable Long id) {
+        rentalService.startRental(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/complete")
     @Operation(summary = "Finaliza um aluguel")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Aluguel finalizado com sucesso", content = @Content(schema = @Schema(implementation = RentalDTO.class))),
+            @ApiResponse(responseCode = "204", description = "Aluguel finalizado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Aluguel não encontrado"),
             @ApiResponse(responseCode = "400", description = "Aluguel não pode ser finalizado")
     })
     @Parameter(name = "id", description = "ID do aluguel", required = true)
-    public ResponseEntity<RentalDTO> completeRental(@PathVariable Long id) {
-        return ResponseEntity.ok(rentalService.completeRental(id));
+    public ResponseEntity<Void> completeRental(@PathVariable Long id) {
+        rentalService.completeRental(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/cancel")
     @Operation(summary = "Cancela um aluguel")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Aluguel cancelado com sucesso", content = @Content(schema = @Schema(implementation = RentalDTO.class))),
+            @ApiResponse(responseCode = "204", description = "Aluguel cancelado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Aluguel não encontrado"),
             @ApiResponse(responseCode = "400", description = "Aluguel não pode ser cancelado")
     })
     @Parameter(name = "id", description = "ID do aluguel", required = true)
-    public ResponseEntity<RentalDTO> cancelRental(@PathVariable Long id) {
-        return ResponseEntity.ok(rentalService.cancelRental(id));
+    public ResponseEntity<Void> cancelRental(@PathVariable Long id) {
+        rentalService.cancelRental(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/terminate-early")
+    @Operation(summary = "Encerra um aluguel antecipadamente com multa")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Aluguel encerrado antecipadamente com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Aluguel não encontrado"),
+            @ApiResponse(responseCode = "400", description = "Aluguel não pode ser encerrado antecipadamente")
+    })
+    @Parameter(name = "id", description = "ID do aluguel", required = true)
+    public ResponseEntity<Void> terminateRentalEarly(@PathVariable Long id) {
+        rentalService.terminateRentalEarly(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/extend")
+    @Operation(summary = "Estende o período de um aluguel em andamento")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Aluguel estendido com sucesso", content = @Content(schema = @Schema(implementation = RentalDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Aluguel não encontrado"),
+            @ApiResponse(responseCode = "400", description = "Aluguel não pode ser estendido")
+    })
+    @Parameter(name = "id", description = "ID do aluguel", required = true)
+    public ResponseEntity<RentalDTO> extendRental(
+            @PathVariable Long id,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime newEndDate) {
+        return ResponseEntity.ok(rentalService.extendRental(id, newEndDate));
     }
 }

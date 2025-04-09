@@ -16,6 +16,12 @@ import {
   TableRow,
   TextField,
   Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Grid,
+  SelectChangeEvent
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -39,10 +45,14 @@ export const VehicleList: React.FC<VehicleListProps> = ({ onAdd, onEdit, onDelet
   const [searchTerm, setSearchTerm] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [categoryFilter, setCategoryFilter] = useState<VehicleCategory | 'all'>('all');
+  const [statusFilter, setStatusFilter] = useState<VehicleStatus | 'all'>('all');
 
   const { data: vehiclesResponse, isLoading } = useQuery<ApiResponse<Vehicle[]>>({
     queryKey: ['vehicles'],
     queryFn: vehicleService.findAll,
+    staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true
   });
 
   const handleChangePage = useCallback((event: unknown, newPage: number) => {
@@ -56,6 +66,11 @@ export const VehicleList: React.FC<VehicleListProps> = ({ onAdd, onEdit, onDelet
 
   const handleSearch = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
+    setPage(0);
+  }, []);
+
+  const handleStatusFilterChange = useCallback((event: SelectChangeEvent<VehicleStatus | 'all'>) => {
+    setStatusFilter(event.target.value as VehicleStatus | 'all');
     setPage(0);
   }, []);
 
@@ -78,17 +93,20 @@ export const VehicleList: React.FC<VehicleListProps> = ({ onAdd, onEdit, onDelet
     const statusMap: Record<VehicleStatus, string> = {
       [VehicleStatus.AVAILABLE]: 'Disponível',
       [VehicleStatus.RENTED]: 'Alugado',
+      [VehicleStatus.RESERVED]: 'Reservado',
       [VehicleStatus.MAINTENANCE]: 'Em Manutenção'
     };
     return statusMap[status] || status;
   };
 
-  const getStatusColor = (status: VehicleStatus): 'success' | 'error' | 'warning' | 'default' => {
+  const getStatusColor = (status: VehicleStatus): 'success' | 'error' | 'warning' | 'info' | 'default' => {
     switch (status) {
       case VehicleStatus.AVAILABLE:
         return 'success';
       case VehicleStatus.RENTED:
         return 'error';
+      case VehicleStatus.RESERVED:
+        return 'info';
       case VehicleStatus.MAINTENANCE:
         return 'warning';
       default:
@@ -106,14 +124,29 @@ export const VehicleList: React.FC<VehicleListProps> = ({ onAdd, onEdit, onDelet
       const matchesCategory =
         categoryFilter === 'all' || vehicle.category === categoryFilter;
 
-      return matchesSearch && matchesCategory;
+      const matchesStatus =
+        statusFilter === 'all' || vehicle.status === statusFilter;
+
+      return matchesSearch && matchesCategory && matchesStatus;
     }) || [];
-  }, [vehiclesResponse?.data, searchTerm, categoryFilter]);
+  }, [vehiclesResponse?.data, searchTerm, categoryFilter, statusFilter]);
+
+  // Ordenar veículos com os disponíveis primeiro
+  const sortedVehicles = useMemo(() => {
+    return [...filteredVehicles].sort((a, b) => {
+      // Primeiro critério: status (disponível primeiro)
+      if (a.status === VehicleStatus.AVAILABLE && b.status !== VehicleStatus.AVAILABLE) return -1;
+      if (a.status !== VehicleStatus.AVAILABLE && b.status === VehicleStatus.AVAILABLE) return 1;
+      
+      // Segundo critério: se ambos têm o mesmo status, ordenar por marca e modelo
+      return a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model);
+    });
+  }, [filteredVehicles]);
 
   const paginatedVehicles = useMemo(() => {
     const start = page * rowsPerPage;
-    return filteredVehicles.slice(start, start + rowsPerPage);
-  }, [filteredVehicles, page, rowsPerPage]);
+    return sortedVehicles.slice(start, start + rowsPerPage);
+  }, [sortedVehicles, page, rowsPerPage]);
 
   if (isLoading) {
     return (
@@ -147,15 +180,35 @@ export const VehicleList: React.FC<VehicleListProps> = ({ onAdd, onEdit, onDelet
 
       <Card>
         <CardContent>
-          <Box mb={2}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              placeholder="Buscar veículos..."
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-          </Box>
+          <Grid container spacing={2} mb={2}>
+            <Grid item xs={12} md={8}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="Buscar veículos..."
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel id="status-filter-label">Status</InputLabel>
+                <Select
+                  labelId="status-filter-label"
+                  id="status-filter"
+                  value={statusFilter}
+                  onChange={handleStatusFilterChange}
+                  label="Status"
+                >
+                  <MenuItem value="all">Todos</MenuItem>
+                  <MenuItem value={VehicleStatus.AVAILABLE}>Disponível</MenuItem>
+                  <MenuItem value={VehicleStatus.RENTED}>Alugado</MenuItem>
+                  <MenuItem value={VehicleStatus.RESERVED}>Reservado</MenuItem>
+                  <MenuItem value={VehicleStatus.MAINTENANCE}>Em Manutenção</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
 
           <TableContainer component={Paper}>
             <Table>
@@ -201,6 +254,8 @@ export const VehicleList: React.FC<VehicleListProps> = ({ onAdd, onEdit, onDelet
                         size="small"
                         onClick={() => onDelete(vehicle)}
                         color="error"
+                        disabled={vehicle.status !== VehicleStatus.AVAILABLE}
+                        title={vehicle.status !== VehicleStatus.AVAILABLE ? 'Apenas veículos disponíveis podem ser excluídos' : 'Excluir veículo'}
                       >
                         <DeleteIcon />
                       </IconButton>

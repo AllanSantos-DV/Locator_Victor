@@ -3,9 +3,11 @@ package com.carrent.application.service;
 import com.carrent.application.dto.AuthenticationRequest;
 import com.carrent.application.dto.AuthenticationResponse;
 import com.carrent.application.dto.RegisterRequest;
+import com.carrent.application.dto.UpdateProfileRequest;
 import com.carrent.domain.entity.User;
 import com.carrent.domain.entity.Role;
 import com.carrent.domain.exception.DuplicateResourceException;
+import com.carrent.domain.exception.UnauthorizedException;
 import com.carrent.domain.repository.UserRepository;
 import com.carrent.infrastructure.metrics.CustomMetricsService;
 import com.carrent.infrastructure.security.JwtService;
@@ -15,6 +17,8 @@ import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -102,5 +106,46 @@ public class AuthenticationService {
                 } catch (JwtException e) {
                         throw new JwtException("Erro ao processar o refresh token", e);
                 }
+        }
+
+        public AuthenticationResponse updateProfile(UpdateProfileRequest request) {
+                // Obter o usuário autenticado
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                String email = authentication.getName();
+
+                User currentUser = userRepository.findByEmail(email)
+                                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+                // Verificar a senha atual
+                if (!passwordEncoder.matches(request.getCurrentPassword(), currentUser.getPassword())) {
+                        throw new UnauthorizedException("Senha atual incorreta");
+                }
+
+                // Verificar se o email está sendo alterado e se já existe
+                if (!currentUser.getEmail().equals(request.getEmail())
+                                && userRepository.existsByEmail(request.getEmail())) {
+                        throw new DuplicateResourceException("Email já está em uso por outro usuário");
+                }
+
+                // Atualizar os dados do usuário
+                currentUser.setName(request.getName());
+                currentUser.setEmail(request.getEmail());
+
+                // Atualizar a senha se fornecida
+                if (request.getNewPassword() != null && !request.getNewPassword().isEmpty()) {
+                        currentUser.setPassword(passwordEncoder.encode(request.getNewPassword()));
+                }
+
+                userRepository.save(currentUser);
+
+                // Gerar novos tokens
+                var jwtToken = jwtService.generateToken(currentUser);
+                var refreshToken = jwtService.generateRefreshToken(currentUser);
+
+                return AuthenticationResponse.builder()
+                                .token(jwtToken)
+                                .refreshToken(refreshToken)
+                                .user(AuthenticationResponse.UserDTO.fromUser(currentUser))
+                                .build();
         }
 }

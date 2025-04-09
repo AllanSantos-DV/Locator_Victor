@@ -3,9 +3,12 @@ package com.carrent.application.service;
 import com.carrent.application.dto.CustomerDTO;
 import com.carrent.application.mapper.CustomerMapper;
 import com.carrent.domain.entity.Customer;
+import com.carrent.domain.entity.Rental;
+import com.carrent.domain.entity.RentalStatus;
 import com.carrent.domain.exception.CustomerNotFoundException;
 import com.carrent.domain.exception.DuplicateResourceException;
 import com.carrent.domain.repository.CustomerRepository;
+import com.carrent.domain.repository.RentalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +21,7 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
+    private final RentalRepository rentalRepository;
 
     @Transactional(readOnly = true)
     public List<CustomerDTO> findAll() {
@@ -73,6 +77,19 @@ public class CustomerService {
         if (!customerRepository.existsById(id)) {
             throw new CustomerNotFoundException(id);
         }
+
+        // Verificar se o cliente possui aluguéis pendentes ou em andamento
+        boolean hasActiveRentals = rentalRepository.hasActiveRentals(id);
+        if (hasActiveRentals) {
+            throw new IllegalStateException("Não é possível excluir cliente com aluguéis pendentes ou em andamento");
+        }
+
+        // Verificar se o cliente possui aluguéis pendentes
+        List<Rental> pendingRentals = rentalRepository.findByCustomerIdAndStatus(id, RentalStatus.PENDING);
+        if (!pendingRentals.isEmpty()) {
+            throw new IllegalStateException("Não é possível excluir cliente com aluguéis pendentes");
+        }
+
         customerRepository.deleteById(id);
     }
 

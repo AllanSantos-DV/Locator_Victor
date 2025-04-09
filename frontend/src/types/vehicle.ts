@@ -10,6 +10,7 @@ export enum VehicleCategory {
 export enum VehicleStatus {
   AVAILABLE = 'AVAILABLE',
   RENTED = 'RENTED',
+  RESERVED = 'RESERVED',
   MAINTENANCE = 'MAINTENANCE'
 }
 

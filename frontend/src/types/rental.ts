@@ -4,7 +4,8 @@ export enum RentalStatus {
   PENDING = 'PENDING',
   IN_PROGRESS = 'IN_PROGRESS',
   COMPLETED = 'COMPLETED',
-  CANCELLED = 'CANCELLED'
+  CANCELLED = 'CANCELLED',
+  EARLY_TERMINATED = 'EARLY_TERMINATED'
 }
 
 export interface Rental extends BaseEntity {
@@ -19,7 +20,14 @@ export interface Rental extends BaseEntity {
   vehicleBrand?: string;
   vehicleModel?: string;
   vehiclePlate?: string;
+  vehicleDailyRate?: number;
   customerName?: string;
+  notes?: string;
+  
+  // Campos de encerramento antecipado
+  earlyTerminationFee?: number;
+  originalTotalAmount?: number;
+  endedEarly?: boolean;
   
   // Objetos aninhados (serão mantidos para compatibilidade com código existente)
   customer?: {
@@ -32,16 +40,20 @@ export interface Rental extends BaseEntity {
     brand: string;
     model: string;
     plate: string;
+    dailyRate?: number;
   };
 }
 
 export interface RentalFormData {
-  customerId: number;
-  vehicleId: number;
+  customerId: string | number;
+  vehicleId: string | number;
+  vehicleDailyRate: number;
+  vehiclePlate?: string;
   startDate: string;
   endDate: string;
   startTime: string;
   endTime: string;
+  totalAmount: number;
+  notes?: string;
   status?: RentalStatus;
-  totalAmount?: number;
-} 
+}

@@ -6,6 +6,9 @@ export const api = axios.create({
   timeout: config.api.timeout,
   headers: {
     'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0'
   } 
 });
 
@@ -34,6 +37,21 @@ api.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
+    
+    // Verificar se o erro é por token expirado pelo header específico
+    if (error.response?.headers?.['x-jwt-expired'] === 'true') {
+      // Limpar tokens e redirecionar para login
+      localStorage.removeItem('@CarRent:token');
+      localStorage.removeItem('@CarRent:refreshToken');
+      localStorage.removeItem('@CarRent:user');
+      
+      // Redirecionar para login
+      if (typeof window !== 'undefined') {
+        window.location.href = '/login';
+      }
+      
+      return Promise.reject(error);
+    }
     
     // Se for erro 401 (não autorizado) e não for uma tentativa de refresh
     if (error.response?.status === 401 && !originalRequest._retry) {

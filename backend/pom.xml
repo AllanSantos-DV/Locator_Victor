@@ -137,6 +137,11 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>4.0.0</version>
+        </dependency>
     </dependencies>
     
     <build>
@@ -189,9 +194,9 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>9.22.3</version>
                 <configuration>
-                    <url>jdbc:mysql://servermysqlcn1.mysql.database.azure.com:3306/victor?useSSL=true&amp;requireSSL=false&amp;serverTimezone=UTC</url>
-                    <user>userdb</user>
-                    <password>admin@123</password>
+                    <url>jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useSSL=true&amp;requireSSL=false&amp;serverTimezone=UTC</url>
+                    <user>${MYSQL_USERNAME}</user>
+                    <password>${MYSQL_PASSWORD}</password>
                     <cleanDisabled>false</cleanDisabled>
                     <baselineOnMigrate>true</baselineOnMigrate>
                 </configuration>

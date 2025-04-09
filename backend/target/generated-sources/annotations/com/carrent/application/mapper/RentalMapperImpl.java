@@ -4,6 +4,7 @@ import com.carrent.application.dto.RentalDTO;
 import com.carrent.domain.entity.Customer;
 import com.carrent.domain.entity.Rental;
 import com.carrent.domain.entity.Vehicle;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -11,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-05T12:01:41-0300",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.42.0.z20250331-1358, environment: Java 21.0.6 (Eclipse Adoptium)"
+    date = "2025-04-08T21:01:08-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.9 (Oracle Corporation)"
 )
 @Component
 public class RentalMapperImpl implements RentalMapper {
@@ -25,12 +26,15 @@ public class RentalMapperImpl implements RentalMapper {
 
         Rental.RentalBuilder rental = Rental.builder();
 
-        rental.actualReturnDate( dto.getActualReturnDate() );
-        rental.endDate( dto.getEndDate() );
-        rental.notes( dto.getNotes() );
         rental.startDate( dto.getStartDate() );
+        rental.endDate( dto.getEndDate() );
+        rental.actualReturnDate( dto.getActualReturnDate() );
         rental.status( dto.getStatus() );
         rental.totalAmount( dto.getTotalAmount() );
+        rental.originalTotalAmount( dto.getOriginalTotalAmount() );
+        rental.earlyTerminationFee( dto.getEarlyTerminationFee() );
+        rental.endedEarly( dto.getEndedEarly() );
+        rental.notes( dto.getNotes() );
 
         return rental.build();
     }
@@ -47,17 +51,21 @@ public class RentalMapperImpl implements RentalMapper {
         rentalDTO.vehicleId( entityVehicleId( entity ) );
         rentalDTO.vehicleBrand( entityVehicleBrand( entity ) );
         rentalDTO.vehicleModel( entityVehicleModel( entity ) );
+        rentalDTO.vehicleDailyRate( entityVehicleDailyRate( entity ) );
         rentalDTO.customerName( entityCustomerName( entity ) );
         rentalDTO.customerId( entityCustomerId( entity ) );
         rentalDTO.createdAt( entity.getCreatedAt() );
         rentalDTO.updatedAt( entity.getUpdatedAt() );
-        rentalDTO.actualReturnDate( entity.getActualReturnDate() );
-        rentalDTO.endDate( entity.getEndDate() );
         rentalDTO.id( entity.getId() );
-        rentalDTO.notes( entity.getNotes() );
         rentalDTO.startDate( entity.getStartDate() );
+        rentalDTO.endDate( entity.getEndDate() );
+        rentalDTO.actualReturnDate( entity.getActualReturnDate() );
         rentalDTO.status( entity.getStatus() );
         rentalDTO.totalAmount( entity.getTotalAmount() );
+        rentalDTO.notes( entity.getNotes() );
+        rentalDTO.earlyTerminationFee( entity.getEarlyTerminationFee() );
+        rentalDTO.originalTotalAmount( entity.getOriginalTotalAmount() );
+        rentalDTO.endedEarly( entity.getEndedEarly() );
 
         return rentalDTO.build();
     }
@@ -82,23 +90,32 @@ public class RentalMapperImpl implements RentalMapper {
             return;
         }
 
-        if ( dto.getActualReturnDate() != null ) {
-            entity.setActualReturnDate( dto.getActualReturnDate() );
+        if ( dto.getStartDate() != null ) {
+            entity.setStartDate( dto.getStartDate() );
         }
         if ( dto.getEndDate() != null ) {
             entity.setEndDate( dto.getEndDate() );
         }
-        if ( dto.getNotes() != null ) {
-            entity.setNotes( dto.getNotes() );
-        }
-        if ( dto.getStartDate() != null ) {
-            entity.setStartDate( dto.getStartDate() );
+        if ( dto.getActualReturnDate() != null ) {
+            entity.setActualReturnDate( dto.getActualReturnDate() );
         }
         if ( dto.getStatus() != null ) {
             entity.setStatus( dto.getStatus() );
         }
         if ( dto.getTotalAmount() != null ) {
             entity.setTotalAmount( dto.getTotalAmount() );
+        }
+        if ( dto.getOriginalTotalAmount() != null ) {
+            entity.setOriginalTotalAmount( dto.getOriginalTotalAmount() );
+        }
+        if ( dto.getEarlyTerminationFee() != null ) {
+            entity.setEarlyTerminationFee( dto.getEarlyTerminationFee() );
+        }
+        if ( dto.getEndedEarly() != null ) {
+            entity.setEndedEarly( dto.getEndedEarly() );
+        }
+        if ( dto.getNotes() != null ) {
+            entity.setNotes( dto.getNotes() );
         }
     }
 
@@ -160,6 +177,21 @@ public class RentalMapperImpl implements RentalMapper {
             return null;
         }
         return model;
+    }
+
+    private BigDecimal entityVehicleDailyRate(Rental rental) {
+        if ( rental == null ) {
+            return null;
+        }
+        Vehicle vehicle = rental.getVehicle();
+        if ( vehicle == null ) {
+            return null;
+        }
+        BigDecimal dailyRate = vehicle.getDailyRate();
+        if ( dailyRate == null ) {
+            return null;
+        }
+        return dailyRate;
     }
 
     private String entityCustomerName(Rental rental) {

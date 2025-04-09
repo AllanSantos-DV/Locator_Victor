@@ -32,24 +32,38 @@ export const rentalService = {
     });
   },
 
-  create: async (data: RentalFormData): Promise<ApiResponse<Rental>> => {
+  create: async (data: any): Promise<ApiResponse<Rental>> => {
+    console.log('RentalService.create - dados sendo enviados:', JSON.stringify(data));
     return api.post('/rentals', data);
   },
 
-  update: async (id: string, data: Partial<RentalFormData>): Promise<ApiResponse<Rental>> => {
+  update: async (id: string, data: any): Promise<ApiResponse<Rental>> => {
+    console.log('RentalService.update - dados sendo enviados:', JSON.stringify(data));
     return api.put(`/rentals/${id}`, data);
   },
 
-  startRental: async (id: string): Promise<ApiResponse<Rental>> => {
+  startRental: async (id: string): Promise<void> => {
     return api.patch(`/rentals/${id}/start`);
   },
 
-  completeRental: async (id: string): Promise<ApiResponse<Rental>> => {
+  completeRental: async (id: string): Promise<void> => {
     return api.patch(`/rentals/${id}/complete`);
   },
 
-  cancelRental: async (id: string, reason?: string): Promise<ApiResponse<Rental>> => {
+  cancelRental: async (id: string, reason?: string): Promise<void> => {
     return api.patch(`/rentals/${id}/cancel`, reason ? { reason } : {});
+  },
+
+  terminateRentalEarly: async (id: string): Promise<void> => {
+    return api.patch(`/rentals/${id}/terminate-early`);
+  },
+
+  extendRental: async (id: string, newEndDate: Date): Promise<ApiResponse<Rental>> => {
+    return api.patch(`/rentals/${id}/extend`, null, {
+      params: {
+        newEndDate: newEndDate.toISOString()
+      }
+    });
   },
 
   delete: async (id: string): Promise<ApiResponse<void>> => {

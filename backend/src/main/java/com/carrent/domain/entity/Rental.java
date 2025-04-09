@@ -29,7 +29,7 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinColumn(name = "vehicle_id", nullable = false)
     @NotNull(message = "O veículo é obrigatório")
     @ToString.Exclude
@@ -63,6 +63,15 @@ public class Rental {
     @NotNull(message = "O valor total é obrigatório")
     @Positive(message = "O valor total deve ser positivo")
     private BigDecimal totalAmount;
+
+    @Column(name = "original_total_amount")
+    private BigDecimal originalTotalAmount;
+
+    @Column(name = "early_termination_fee")
+    private BigDecimal earlyTerminationFee;
+
+    @Column(name = "ended_early")
+    private Boolean endedEarly = false;
 
     @Column(length = 1000)
     private String notes;

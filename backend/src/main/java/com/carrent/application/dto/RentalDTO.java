@@ -1,6 +1,7 @@
 package com.carrent.application.dto;
 
 import com.carrent.domain.entity.RentalStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ public class RentalDTO {
     private String vehicleBrand;
     private String vehicleModel;
     private String vehiclePlate;
+    private BigDecimal vehicleDailyRate;
 
     @NotNull(message = "O ID do cliente é obrigatório")
     @Positive(message = "O ID do cliente deve ser positivo")
@@ -35,11 +37,14 @@ public class RentalDTO {
     private String customerName;
 
     @NotNull(message = "A data de início é obrigatória")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime startDate;
 
     @NotNull(message = "A data de término é obrigatória")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime endDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime actualReturnDate;
 
     @NotNull(message = "O status é obrigatório")
@@ -51,9 +56,16 @@ public class RentalDTO {
 
     private String notes;
 
+    // Novos campos para encerramento antecipado
+    private BigDecimal earlyTerminationFee;
+    private BigDecimal originalTotalAmount;
+    private Boolean endedEarly;
+
     @CreatedDate
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updatedAt;
 }

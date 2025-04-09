@@ -347,7 +347,7 @@ public class GlobalExceptionHandler {
                                 "Ocorreu um erro interno no servidor. Por favor, tente novamente mais tarde.");
         }
 
-        @ExceptionHandler({ JwtException.class, ExpiredJwtException.class })
+        @ExceptionHandler({ JwtException.class })
         public ResponseEntity<ErrorResponse> handleJwtException(
                         JwtException ex,
                         HttpServletRequest request) {
@@ -356,8 +356,24 @@ public class GlobalExceptionHandler {
                                 .status(HttpStatus.UNAUTHORIZED)
                                 .body(ErrorResponse.builder()
                                                 .status(HttpStatus.UNAUTHORIZED.value())
-                                                .error("Token inválido ou expirado")
-                                                .message("O token fornecido é inválido ou expirou")
+                                                .error("Token inválido")
+                                                .message("O token fornecido é inválido")
+                                                .path(request.getRequestURI())
+                                                .build());
+        }
+
+        @ExceptionHandler(ExpiredJwtException.class)
+        public ResponseEntity<ErrorResponse> handleExpiredJwtException(
+                        ExpiredJwtException ex,
+                        HttpServletRequest request) {
+                log.error("Token JWT expirado: {}", ex.getMessage());
+                return ResponseEntity
+                                .status(HttpStatus.UNAUTHORIZED)
+                                .header("X-JWT-Expired", "true")
+                                .body(ErrorResponse.builder()
+                                                .status(HttpStatus.UNAUTHORIZED.value())
+                                                .error("Token expirado")
+                                                .message("O token fornecido expirou")
                                                 .path(request.getRequestURI())
                                                 .build());
         }
@@ -388,6 +404,21 @@ public class GlobalExceptionHandler {
                                                 .status(HttpStatus.NOT_FOUND.value())
                                                 .error("Recurso não encontrado")
                                                 .message("O recurso estático solicitado não foi encontrado")
+                                                .path(request.getRequestURI())
+                                                .build());
+        }
+
+        @ExceptionHandler(UnauthorizedException.class)
+        public ResponseEntity<ErrorResponse> handleUnauthorizedException(
+                        UnauthorizedException ex,
+                        HttpServletRequest request) {
+                log.error("Não autorizado: {}", ex.getMessage());
+                return ResponseEntity
+                                .status(HttpStatus.UNAUTHORIZED)
+                                .body(ErrorResponse.builder()
+                                                .status(HttpStatus.UNAUTHORIZED.value())
+                                                .error("Não autorizado")
+                                                .message(ex.getMessage())
                                                 .path(request.getRequestURI())
                                                 .build());
         }

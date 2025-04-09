@@ -19,24 +19,28 @@ interface RentalDeleteDialogProps {
 const getActionInfo = (rental: Rental | null) => {
   if (!rental) return { title: '', message: '', buttonText: '' };
 
+  // Obter informações do cliente e veículo
+  const clientName = rental.customerName || rental.customer?.name || 'N/A';
+  const vehicleInfo = `${rental.vehicleBrand || rental.vehicle?.brand || ''} ${rental.vehicleModel || rental.vehicle?.model || ''} (Placa: ${rental.vehiclePlate || rental.vehicle?.plate || 'N/A'})`;
+
   switch (rental.status) {
     case RentalStatus.PENDING:
       return {
         title: 'Excluir Aluguel',
-        message: 'Tem certeza que deseja excluir este aluguel pendente?',
+        message: `Tem certeza que deseja excluir o aluguel pendente do cliente ${clientName}, para o veículo ${vehicleInfo}?`,
         buttonText: 'Excluir'
       };
     case RentalStatus.IN_PROGRESS:
       return {
         title: 'Cancelar Aluguel',
-        message: 'Tem certeza que deseja cancelar este aluguel em andamento? Esta ação não pode ser desfeita.',
+        message: `Tem certeza que deseja cancelar o aluguel em andamento do cliente ${clientName}, para o veículo ${vehicleInfo}? Esta ação não pode ser desfeita.`,
         buttonText: 'Cancelar'
       };
     case RentalStatus.COMPLETED:
     case RentalStatus.CANCELLED:
       return {
         title: 'Excluir Aluguel',
-        message: 'Tem certeza que deseja excluir este aluguel? Esta ação não pode ser desfeita.',
+        message: `Tem certeza que deseja excluir o registro de aluguel do cliente ${clientName}, para o veículo ${vehicleInfo}? Esta ação não pode ser desfeita.`,
         buttonText: 'Excluir'
       };
     default:

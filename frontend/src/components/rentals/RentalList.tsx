@@ -30,19 +30,21 @@ import {
   Delete as DeleteIcon,
   PlayArrow as StartIcon,
   Stop as CompleteIcon,
-  Cancel as CancelIcon
+  Cancel as CancelIcon,
+  Update as UpdateIcon
 } from '@mui/icons-material';
 import { useRentals } from '../../hooks/useRentals';
 import { Rental, RentalStatus } from '../../types/rental';
 import { formatCurrency } from '../../utils/formatters';
 
 interface RentalListProps {
-  onAdd: () => void;
+  onAdd?: () => void;
   onEdit: (rental: Rental) => void;
   onDelete: (rental: Rental) => void;
-  onStart: (rental: Rental) => Promise<void>;
-  onComplete: (rental: Rental) => Promise<void>;
-  onCancel: (rental: Rental) => Promise<void>;
+  onStart: (rental: Rental) => void;
+  onComplete: (rental: Rental) => void;
+  onCancel: (rental: Rental) => void;
+  onExtend: (rental: Rental) => void;
 }
 
 export const RentalList: React.FC<RentalListProps> = ({
@@ -51,7 +53,8 @@ export const RentalList: React.FC<RentalListProps> = ({
   onDelete,
   onStart,
   onComplete,
-  onCancel
+  onCancel,
+  onExtend
 }) => {
   const { rentals } = useRentals();
   const [searchTerm, setSearchTerm] = useState('');
@@ -69,15 +72,107 @@ export const RentalList: React.FC<RentalListProps> = ({
     return matchesSearch && matchesStatus;
   });
 
-  // Função para traduzir o status para portugês
-  const translateStatus = (status: string): string => {
-    const statusMap: Record<string, string> = {
-      PENDING: 'Pendente',
-      IN_PROGRESS: 'Em Andamento',
-      COMPLETED: 'Concluído',
-      CANCELLED: 'Cancelado'
-    };
-    return statusMap[status] || status;
+  const getStatusLabel = (status: RentalStatus) => {
+    switch (status) {
+      case RentalStatus.PENDING:
+        return 'Pendente';
+      case RentalStatus.IN_PROGRESS:
+        return 'Em Andamento';
+      case RentalStatus.COMPLETED:
+        return 'Concluído';
+      case RentalStatus.CANCELLED:
+        return 'Cancelado';
+      case RentalStatus.EARLY_TERMINATED:
+        return 'Encerrado Antecipadamente';
+      default:
+        return status;
+    }
+  };
+
+  const renderCancelButton = (rental: Rental) => {
+    if (rental.status === RentalStatus.IN_PROGRESS) {
+      return (
+        <Tooltip title="Encerrar Antecipadamente">
+          <IconButton 
+            color="error" 
+            onClick={() => onCancel(rental)}
+          >
+            <CancelIcon />
+          </IconButton>
+        </Tooltip>
+      );
+    } else {
+      return (
+        <Tooltip title="Cancelar Aluguel">
+          <IconButton 
+            color="error" 
+            onClick={() => onCancel(rental)}
+            disabled={rental.status !== RentalStatus.PENDING}
+          >
+            <CancelIcon />
+          </IconButton>
+        </Tooltip>
+      );
+    }
+  };
+
+  const renderActionButtons = (rental: Rental) => {
+    switch (rental.status) {
+      case 'PENDING':
+        return (
+          <>
+            <Tooltip title="Editar">
+              <IconButton
+                onClick={() => onEdit(rental)}
+                color="primary"
+                size="small"
+              >
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Iniciar Aluguel">
+              <IconButton
+                onClick={() => onStart(rental)}
+                color="success"
+                size="small"
+              >
+                <StartIcon />
+              </IconButton>
+            </Tooltip>
+            {renderCancelButton(rental)}
+          </>
+        );
+      case 'IN_PROGRESS':
+        return (
+          <>
+            <Tooltip title="Finalizar Aluguel">
+              <IconButton
+                onClick={() => onComplete(rental)}
+                color="success"
+                size="small"
+              >
+                <CompleteIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Estender Aluguel">
+              <IconButton
+                onClick={() => onExtend(rental)}
+                color="primary"
+                size="small"
+              >
+                <UpdateIcon />
+              </IconButton>
+            </Tooltip>
+            {renderCancelButton(rental)}
+          </>
+        );
+      default:
+        return (
+          <Typography variant="caption" color="textSecondary">
+            Sem ações disponíveis
+          </Typography>
+        );
+    }
   };
 
   return (
@@ -171,7 +266,7 @@ export const RentalList: React.FC<RentalListProps> = ({
                       <TableCell>{new Date(rental.endDate).toLocaleDateString('pt-BR')}</TableCell>
                       <TableCell>
                         <Chip 
-                          label={translateStatus(rental.status)}
+                          label={getStatusLabel(rental.status)}
                           color={
                             rental.status === 'PENDING' ? 'warning' : 
                             rental.status === 'IN_PROGRESS' ? 'info' : 
@@ -184,72 +279,7 @@ export const RentalList: React.FC<RentalListProps> = ({
                       <TableCell>{formatCurrency(rental.totalAmount)}</TableCell>
                       <TableCell align="right">
                         <Stack direction="row" spacing={1} justifyContent="flex-end">
-                          {rental.status === RentalStatus.PENDING && (
-                            <>
-                              <Tooltip title="Editar">
-                                <IconButton
-                                  onClick={() => onEdit(rental)}
-                                  color="primary"
-                                  size="small"
-                                >
-                                  <EditIcon />
-                                </IconButton>
-                              </Tooltip>
-                              <Tooltip title="Iniciar Aluguel">
-                                <IconButton
-                                  onClick={() => onStart(rental)}
-                                  color="success"
-                                  size="small"
-                                >
-                                  <StartIcon />
-                                </IconButton>
-                              </Tooltip>
-                              <Tooltip title="Excluir">
-                                <IconButton
-                                  onClick={() => onDelete(rental)}
-                                  color="error"
-                                  size="small"
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
-                              </Tooltip>
-                            </>
-                          )}
-
-                          {rental.status === RentalStatus.IN_PROGRESS && (
-                            <>
-                              <Tooltip title="Finalizar Aluguel">
-                                <IconButton
-                                  onClick={() => onComplete(rental)}
-                                  color="success"
-                                  size="small"
-                                >
-                                  <CompleteIcon />
-                                </IconButton>
-                              </Tooltip>
-                              <Tooltip title="Cancelar Aluguel">
-                                <IconButton
-                                  onClick={() => onCancel(rental)}
-                                  color="warning"
-                                  size="small"
-                                >
-                                  <CancelIcon />
-                                </IconButton>
-                              </Tooltip>
-                            </>
-                          )}
-
-                          {(rental.status === RentalStatus.COMPLETED || rental.status === RentalStatus.CANCELLED) && (
-                            <Tooltip title="Excluir">
-                              <IconButton
-                                onClick={() => onDelete(rental)}
-                                color="error"
-                                size="small"
-                              >
-                                <DeleteIcon />
-                              </IconButton>
-                            </Tooltip>
-                          )}
+                          {renderActionButtons(rental)}
                         </Stack>
                       </TableCell>
                     </TableRow>

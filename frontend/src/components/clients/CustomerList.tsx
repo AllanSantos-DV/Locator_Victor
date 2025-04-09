@@ -19,6 +19,8 @@ import {
 import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Search as SearchIcon } from '@mui/icons-material';
 import { useCustomers } from '../../hooks/useCustomers';
 import { Customer } from '../../types/customer';
+import { useRentals } from '../../hooks/useRentals';
+import { RentalStatus } from '../../types/rental';
 
 interface CustomerListProps {
   onAdd: () => void;
@@ -28,6 +30,7 @@ interface CustomerListProps {
 
 export const CustomerList: React.FC<CustomerListProps> = ({ onAdd, onEdit, onDelete }) => {
   const { customers } = useCustomers();
+  const { rentals } = useRentals();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
@@ -60,6 +63,16 @@ export const CustomerList: React.FC<CustomerListProps> = ({ onAdd, onEdit, onDel
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
+
+  // Função para verificar se um cliente tem aluguéis pendentes ou em andamento
+  const customerHasActiveRentals = (customerId: number): boolean => {
+    if (!rentals.data?.data) return false;
+    
+    return rentals.data.data.some(
+      rental => rental.customerId === customerId && 
+      (rental.status === RentalStatus.PENDING || rental.status === RentalStatus.IN_PROGRESS)
+    );
+  };
 
   if (customers.isLoading) {
     return <Typography>Carregando clientes...</Typography>;
@@ -132,6 +145,10 @@ export const CustomerList: React.FC<CustomerListProps> = ({ onAdd, onEdit, onDel
                       color="error"
                       onClick={() => onDelete(customer)}
                       size="small"
+                      disabled={customerHasActiveRentals(customer.id)}
+                      title={customerHasActiveRentals(customer.id) ? 
+                        'Cliente possui aluguéis pendentes ou em andamento' : 
+                        'Excluir cliente'}
                     >
                       <DeleteIcon />
                     </IconButton>

@@ -27,6 +27,12 @@ export const useCustomers = () => {
     enabled: !!document
   });
 
+  const useCustomerHasActiveRentals = (customerId: number) => useQuery({
+    queryKey: ['customers', customerId, 'active-rentals'],
+    queryFn: () => customerService.hasActiveRentals(customerId.toString()),
+    enabled: !!customerId
+  });
+
   const createCustomer = useMutation({
     mutationFn: customerService.create,
     onSuccess: () => {
@@ -56,6 +62,7 @@ export const useCustomers = () => {
     useCustomerById,
     useCustomerByEmail,
     useCustomerByDocument,
+    useCustomerHasActiveRentals,
     createCustomer,
     updateCustomer,
     deleteCustomer

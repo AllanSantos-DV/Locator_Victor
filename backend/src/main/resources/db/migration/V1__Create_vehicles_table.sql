@@ -1,17 +1,17 @@
-CREATE TABLE vehicles (
+CREATE TABLE IF NOT EXISTS vehicles (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     brand VARCHAR(50) NOT NULL,
     model VARCHAR(50) NOT NULL,
     model_year INT NOT NULL,
-    plate VARCHAR(10) NOT NULL,
-    category VARCHAR(20) NOT NULL,
-    daily_rate DECIMAL(10,2) NOT NULL,
+    plate VARCHAR(255) NOT NULL,
+    category ENUM('ECONOMY', 'STANDARD', 'LUXURY', 'SUV', 'TRUCK') NOT NULL,
+    daily_rate DECIMAL(38,2) NOT NULL,
     description VARCHAR(1000),
-    available BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT chk_year CHECK (model_year >= 1900 AND model_year <= 2100),
-    CONSTRAINT chk_daily_rate CHECK (daily_rate > 0)
+    available BIT NOT NULL,
+    created_at DATETIME(6),
+    updated_at DATETIME(6),
+    status VARCHAR(20) DEFAULT 'AVAILABLE' NOT NULL,
+    CONSTRAINT UK_lle7kf4cbmwh6twthj1tik9us UNIQUE (plate)
 );
 
 CREATE INDEX idx_vehicles_plate ON vehicles(plate);

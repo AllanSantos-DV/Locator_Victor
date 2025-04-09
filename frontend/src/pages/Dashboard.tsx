@@ -23,6 +23,16 @@ import {
 import { api } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 
+// Função para garantir que as datas sejam formatadas corretamente
+const formatDate = (dateString: string): Date => {
+  // Verifica se a data já tem o formato ISO completo ou apenas data
+  // Se for apenas YYYY-MM-DD, adiciona a hora (T00:00:00)
+  if (dateString && dateString.length === 10) {
+    return new Date(`${dateString}T00:00:00`);
+  }
+  return new Date(dateString);
+};
+
 interface RecentRental {
   id: number;
   clientName: string;
@@ -171,7 +181,7 @@ export const Dashboard = () => {
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h4" gutterBottom>
-        Bem-vindo, {user?.name || 'Usuário'}!
+        Bem-vindo, {user?.name ? user.name.split(' ')[0] : 'Usuário'}!
       </Typography>
 
       <Grid container spacing={3}>
@@ -245,7 +255,7 @@ export const Dashboard = () => {
                         }
                         secondary={
                           <Typography variant="body2" color="textSecondary">
-                            {new Date(rental.startDate).toLocaleDateString('pt-BR')} até {new Date(rental.endDate).toLocaleDateString('pt-BR')}
+                            {formatDate(rental.startDate).toLocaleDateString('pt-BR')} até {formatDate(rental.endDate).toLocaleDateString('pt-BR')}
                           </Typography>
                         }
                       />

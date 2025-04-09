@@ -20,6 +20,7 @@ public interface RentalMapper {
     @Mapping(target = "vehicleId", source = "vehicle.id")
     @Mapping(target = "vehicleBrand", source = "vehicle.brand")
     @Mapping(target = "vehicleModel", source = "vehicle.model")
+    @Mapping(target = "vehicleDailyRate", source = "vehicle.dailyRate")
     @Mapping(target = "customerName", source = "customer.name")
     @Mapping(target = "customerId", source = "customer.id")
     @Mapping(target = "createdAt", source = "createdAt")

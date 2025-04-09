@@ -76,6 +76,12 @@ public class VehicleService {
     @Transactional
     public void delete(Long id) {
         Vehicle vehicle = findVehicleById(id);
+
+        // Validar se o veículo está disponível
+        if (vehicle.getStatus() != VehicleStatus.AVAILABLE) {
+            throw new IllegalStateException("Apenas veículos com status DISPONÍVEL podem ser excluídos");
+        }
+
         vehicleRepository.delete(vehicle);
     }
 

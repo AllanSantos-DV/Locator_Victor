@@ -19,6 +19,10 @@ export const customerService = {
     return api.get(`/customers/document/${document}`);
   },
 
+  hasActiveRentals: async (id: string): Promise<ApiResponse<boolean>> => {
+    return api.get(`/customers/${id}/active-rentals`);
+  },
+
   create: async (data: CustomerFormData): Promise<ApiResponse<Customer>> => {
     return api.post('/customers', data);
   },
