@@ -9,8 +9,13 @@ import {
   Box,
   Typography,
   Alert,
+  IconButton,
+  Container
 } from '@mui/material';
-import { PersonAdd as PersonAddIcon } from '@mui/icons-material';
+import { 
+  PersonAdd as PersonAddIcon,
+  ArrowBack as ArrowBackIcon 
+} from '@mui/icons-material';
 import { api } from '../../services/api';
 import axios from 'axios';
 
@@ -70,82 +75,109 @@ export const Register = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <PersonAddIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-        Cadastro
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="name"
-          label="Nome"
-          name="name"
-          autoComplete="name"
-          autoFocus
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email"
-          name="email"
-          autoComplete="email"
-          type="email"
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Senha"
-          type="password"
-          id="password"
-          autoComplete="new-password"
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="confirmPassword"
-          label="Confirmar Senha"
-          type="password"
-          id="confirmPassword"
-          autoComplete="new-password"
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-          disabled={loading}
-        >
-          {loading ? 'Cadastrando...' : 'Cadastrar'}
-        </Button>
-        <Grid container>
-          <Grid item>
-            <Link component={RouterLink} to="/login" variant="body2">
-              {"Já tem uma conta? Faça login"}
-            </Link>
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          position: 'relative',
+          width: '100%'
+        }}
+      >
+        {/* Botão Voltar */}
+        <Box sx={{ position: 'absolute', top: 0, left: 0 }}>
+          <IconButton 
+            color="primary"
+            onClick={() => navigate('/')}
+            aria-label="voltar para página inicial"
+          >
+            <ArrowBackIcon />
+          </IconButton>
+        </Box>
+
+        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+          <PersonAddIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Cadastro
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Nome"
+            name="name"
+            autoComplete="name"
+            autoFocus
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
+            type="email"
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Senha"
+            type="password"
+            id="password"
+            autoComplete="new-password"
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="confirmPassword"
+            label="Confirmar Senha"
+            type="password"
+            id="confirmPassword"
+            autoComplete="new-password"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            disabled={loading}
+          >
+            {loading ? 'Cadastrando...' : 'Cadastrar'}
+          </Button>
+          <Grid container justifyContent="space-between" alignItems="center">
+            <Grid item>
+              <Button
+                variant="text"
+                color="primary"
+                onClick={() => navigate('/')}
+                startIcon={<ArrowBackIcon />}
+                size="small"
+              >
+                Voltar
+              </Button>
+            </Grid>
+            <Grid item>
+              <Link component={RouterLink} to="/login" variant="body2">
+                {"Já tem uma conta? Faça login"}
+              </Link>
+            </Grid>
           </Grid>
-        </Grid>
+        </Box>
       </Box>
-    </Box>
+    </Container>
   );
 }; 

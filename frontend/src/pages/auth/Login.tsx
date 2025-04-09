@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link as RouterLink, useLocation } from 'react-router-dom';
-import { Container, Typography, TextField, Button, Box, Avatar, Link, Grid, Alert } from '@mui/material';
-import { LockOutlined as LockIcon } from '@mui/icons-material';
+import { Container, Typography, TextField, Button, Box, Avatar, Link, Grid, Alert, IconButton } from '@mui/material';
+import { LockOutlined as LockIcon, ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
 
@@ -76,8 +76,21 @@ export const Login: React.FC = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          position: 'relative',
+          width: '100%'
         }}
       >
+        {/* Botão Voltar */}
+        <Box sx={{ position: 'absolute', top: 0, left: 0 }}>
+          <IconButton 
+            color="primary"
+            onClick={() => navigate('/')}
+            aria-label="voltar para página inicial"
+          >
+            <ArrowBackIcon />
+          </IconButton>
+        </Box>
+
         <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
           <LockIcon />
         </Avatar>
@@ -120,7 +133,18 @@ export const Login: React.FC = () => {
           >
             {isLoading ? 'Entrando...' : 'Entrar'}
           </Button>
-          <Grid container>
+          <Grid container justifyContent="space-between" alignItems="center">
+            <Grid item>
+              <Button
+                variant="text"
+                color="primary"
+                onClick={() => navigate('/')}
+                startIcon={<ArrowBackIcon />}
+                size="small"
+              >
+                Voltar
+              </Button>
+            </Grid>
             <Grid item>
               <Link component={RouterLink} to="/register" variant="body2">
                 {"Não tem uma conta? Cadastre-se"}

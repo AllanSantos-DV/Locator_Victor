@@ -6,8 +6,14 @@ import { lazyLoad } from './utils/lazyLoad';
 // Layouts
 import { MainLayout } from './layouts/MainLayout';
 import { AuthLayout } from './layouts/AuthLayout';
+import { LandingLayout } from './layouts/LandingLayout';
 
 // Lazy loaded pages
+const LandingPage = lazyLoad(async () => {
+  const module = await import('./pages/LandingPage');
+  return { default: module.LandingPage };
+});
+
 const LoginPage = lazyLoad(async () => {
   const module = await import('./pages/auth/Login');
   return { default: module.Login };
@@ -79,8 +85,15 @@ const AdminRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const AppRoutes = () => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <Routes>
+      {/* Landing Page */}
+      <Route element={<LandingLayout />}>
+        <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LandingPage />} />
+      </Route>
+
       {/* Public Routes */}
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />
@@ -143,7 +156,6 @@ export const AppRoutes = () => {
       </Route>
 
       {/* Fallback Routes */}
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
