@@ -31,12 +31,10 @@
   "scripts": {
     "start": "cross-env BROWSER=http://localhost:3000/login react-scripts start",
     "start:dev": "env-cmd -f .env.development react-scripts start",
-    "start:prod": "env-cmd -f .env.production react-scripts start",
     "start:safe": "cross-env NODE_OPTIONS=--openssl-legacy-provider DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "start:windows": "react-scripts start",
     "build": "react-scripts build",
     "build:dev": "env-cmd -f .env.development react-scripts build",
-    "build:prod": "env-cmd -f .env.production react-scripts build",
     "build:safe": "cross-env NODE_OPTIONS=--openssl-legacy-provider DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "react-scripts test",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
