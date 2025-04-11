@@ -10,6 +10,7 @@ import com.carrent.domain.exception.DuplicateResourceException;
 import com.carrent.domain.exception.ResourceNotFoundException;
 import com.carrent.domain.repository.UserRepository;
 import com.carrent.infrastructure.notification.SystemNotificationService;
+import com.carrent.infrastructure.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,26 +29,37 @@ public class AdminUserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final SystemNotificationService systemNotificationService;
+    private final AuthenticationFacade authenticationFacade;
 
     /**
-     * Obtém todos os usuários normais do sistema (não administradores)
+     * Obtém todos os usuários normais do sistema (não administradores),
+     * excluindo o usuário autenticado da listagem
      * 
-     * @return Lista de usuários com perfil não-ADMIN
+     * @return Lista de usuários com perfil não-ADMIN, exceto o usuário atual
      */
     public List<UserDTO> getAllUsers() {
+        User currentUser = authenticationFacade.getCurrentUser();
+        Long currentUserId = currentUser.getId();
+
         // Usa o método do repositório que filtra diretamente no banco de dados
         return userRepository.findByRoleNot(Role.ADMIN).stream()
+                .filter(user -> !user.getId().equals(currentUserId)) // Exclui o usuário atual
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     /**
-     * Obtém todos os usuários do sistema, incluindo administradores
+     * Obtém todos os usuários do sistema, incluindo administradores,
+     * mas excluindo o usuário autenticado da listagem
      * 
-     * @return Lista completa de usuários
+     * @return Lista completa de usuários, exceto o usuário atual
      */
     public List<UserDTO> getAllUsersIncludingAdmins() {
+        User currentUser = authenticationFacade.getCurrentUser();
+        Long currentUserId = currentUser.getId();
+
         return userRepository.findAll().stream()
+                .filter(user -> !user.getId().equals(currentUserId)) // Exclui o usuário atual
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
