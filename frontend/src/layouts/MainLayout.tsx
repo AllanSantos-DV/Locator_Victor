@@ -27,7 +27,8 @@ import {
   AccountCircle as ProfileIcon,
   SupervisorAccount as AdminIcon,
   Settings as SettingsIcon,
-  Logout as LogoutIcon
+  Logout as LogoutIcon,
+  BarChart as ChartIcon
 } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
 import NotificationsMenu from '../components/NotificationsMenu';
@@ -102,6 +103,12 @@ export const MainLayout: React.FC = () => {
                 <AdminIcon />
               </ListItemIcon>
               <ListItemText primary="Gerenciar Usuários" />
+            </ListItem>
+            <ListItem button component={Link} to="/admin/metrics">
+              <ListItemIcon>
+                <ChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Métricas de Negócio" />
             </ListItem>
           </List>
         </>

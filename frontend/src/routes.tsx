@@ -75,6 +75,11 @@ const AdminNotifyUserPage = lazyLoad(async () => {
   return { default: module.NotifyUserPage };
 });
 
+const BusinessMetricsPage = lazyLoad(async () => {
+  const module = await import('./pages/admin/metrics/BusinessMetricsPage');
+  return { default: module.BusinessMetricsPage };
+});
+
 interface ProtectedRouteProps {
   children: React.ReactNode;
   requiredRoles?: string[];
@@ -182,6 +187,7 @@ export const AppRoutes = () => {
         <Route path="/admin/vehicles" element={<VehiclesPage />} />
         <Route path="/admin/customers" element={<CustomersPage />} />
         <Route path="/admin/rentals" element={<RentalsPage />} />
+        <Route path="/admin/metrics" element={<BusinessMetricsPage />} />
         
         {/* Admin User Management Routes */}
         <Route path="/admin/users" element={<AdminUserListPage />} />

@@ -307,7 +307,7 @@ export const RentalsPage: React.FC = () => {
     return payload;
   };
 
-  const handleFormSubmit = async (data: RentalFormData, isEdit: boolean = false) => {
+  const handleFormSubmit = async (data: RentalFormData, isEdit = false) => {
     console.log('handleFormSubmit chamado', new Date().toISOString());
     console.log('Dados recebidos do formulário:', data);
     console.log('Valor total recebido:', data.totalAmount);

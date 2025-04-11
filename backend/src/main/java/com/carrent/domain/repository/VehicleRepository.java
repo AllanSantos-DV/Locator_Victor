@@ -28,4 +28,10 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     @Modifying
     @Query("update Vehicle v set v.status = ?1, v.available = ?2 where v.id = ?3")
     void updateStatus(VehicleStatus status, Boolean available, Long id);
+
+    List<Vehicle> findByAvailable(Boolean available);
+
+    List<Vehicle> findByCategory(VehicleCategory category);
+
+    List<Vehicle> findByStatus(VehicleStatus status);
 }
