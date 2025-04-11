@@ -49,9 +49,30 @@ const ProfilePage = lazyLoad(async () => {
   return { default: module.Profile };
 });
 
+const NotificationsPage = lazyLoad(async () => {
+  const module = await import('./pages/user/notifications/NotificationsPage');
+  return { default: module.default };
+});
+
 const NotFoundPage = lazyLoad(async () => {
   const module = await import('./pages/NotFound');
   return { default: module.NotFound };
+});
+
+// Admin Pages
+const AdminUserListPage = lazyLoad(async () => {
+  const module = await import('./pages/admin/users');
+  return { default: module.UserListPage };
+});
+
+const AdminUserFormPage = lazyLoad(async () => {
+  const module = await import('./pages/admin/users');
+  return { default: module.UserFormPage };
+});
+
+const AdminNotifyUserPage = lazyLoad(async () => {
+  const module = await import('./pages/admin/users');
+  return { default: module.NotifyUserPage };
 });
 
 interface ProtectedRouteProps {
@@ -142,6 +163,14 @@ export const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/user/notifications"
+          element={
+            <ProtectedRoute>
+              <NotificationsPage />
+            </ProtectedRoute>
+          }
+        />
       </Route>
 
       {/* Admin Routes */}
@@ -153,6 +182,12 @@ export const AppRoutes = () => {
         <Route path="/admin/vehicles" element={<VehiclesPage />} />
         <Route path="/admin/customers" element={<CustomersPage />} />
         <Route path="/admin/rentals" element={<RentalsPage />} />
+        
+        {/* Admin User Management Routes */}
+        <Route path="/admin/users" element={<AdminUserListPage />} />
+        <Route path="/admin/users/new" element={<AdminUserFormPage />} />
+        <Route path="/admin/users/:id/edit" element={<AdminUserFormPage />} />
+        <Route path="/admin/users/:id/notify" element={<AdminNotifyUserPage />} />
       </Route>
 
       {/* Fallback Routes */}

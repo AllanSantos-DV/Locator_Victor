@@ -104,4 +104,26 @@ O projeto inclui monitoramento com Spring Boot Actuator, com endpoints disponív
 http://localhost:8080/actuator
 ```
 
-Métricas são expostas no formato Prometheus para integração com sistemas de monitoramento. 
+Métricas são expostas no formato Prometheus para integração com sistemas de monitoramento.
+
+## Gerenciamento de Usuários
+
+O sistema implementa um gerenciamento de usuários com as seguintes características:
+
+### Perfis de Usuário
+- **USER**: Usuário normal com acesso limitado ao sistema
+- **ADMIN**: Administrador com acesso completo, incluindo gerenciamento de usuários
+
+### API de Gerenciamento de Usuários
+- `GET /admin/users`: Retorna apenas usuários com perfil USER
+- `GET /admin/users/all`: Retorna todos os usuários, incluindo administradores
+- `GET /admin/users/{id}`: Detalha um usuário específico
+- `POST /admin/users`: Cria um novo usuário
+- `PUT /admin/users/{id}`: Atualiza um usuário existente (não permitido para ADMINs)
+- `DELETE /admin/users/{id}`: Remove um usuário existente (não permitido para ADMINs)
+- `POST /admin/users/{id}/notify`: Envia uma notificação para um usuário
+
+### Restrições de Segurança
+- Somente administradores podem acessar o módulo de gerenciamento de usuários
+- Usuários com perfil ADMIN não podem ser editados ou excluídos
+- As operações sensíveis são filtradas diretamente no banco de dados para performance 

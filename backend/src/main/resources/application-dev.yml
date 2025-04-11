@@ -69,13 +69,13 @@ management:
 
 logging:
   level:
-    root: ${LOG_LEVEL_ROOT:INFO}
+    root: ${LOG_LEVEL_ROOT:WARN}
     com.carrent: ${LOG_LEVEL_APP:INFO}
-    org.springframework.web: ${LOG_LEVEL_SPRING_WEB:WARN}
-    org.hibernate: ${LOG_LEVEL_HIBERNATE:WARN}
-    org.hibernate.SQL: ${LOG_LEVEL_HIBERNATE_SQL:INFO}
-    org.hibernate.type.descriptor.sql.BasicBinder: ${LOG_LEVEL_HIBERNATE_BINDER:INFO}
-    io.micrometer: ${LOG_LEVEL_MICROMETER:WARN}
+    org.springframework.web: ${LOG_LEVEL_SPRING_WEB:ERROR}
+    org.hibernate: ${LOG_LEVEL_HIBERNATE:ERROR}
+    org.hibernate.SQL: ${LOG_LEVEL_HIBERNATE_SQL:ERROR}
+    org.hibernate.type.descriptor.sql.BasicBinder: ${LOG_LEVEL_HIBERNATE_BINDER:ERROR}
+    io.micrometer: ${LOG_LEVEL_MICROMETER:ERROR}
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
