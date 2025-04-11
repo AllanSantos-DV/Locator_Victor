@@ -12,6 +12,8 @@ O CarRent é uma solução de software completa para empresas de locação de ve
 - Faturamento e pagamentos
 - Relatórios e estatísticas
 - Dashboard com indicadores de negócio
+- Sistema de notificações em tempo real
+- Gerenciamento de usuários e permissões
 
 ## Arquitetura do Sistema
 
@@ -142,4 +144,34 @@ Para contribuir com o projeto:
 
 ## Licença
 
-Este projeto está licenciado sob a licença MIT. 
+Este projeto está licenciado sob a licença MIT.
+
+## Funcionalidades Principais
+
+### Gestão de Veículos
+- Cadastro completo com informações detalhadas
+- Acompanhamento de manutenções
+- Controle de disponibilidade
+
+### Gestão de Clientes
+- Cadastro completo de clientes (PF e PJ)
+- Histórico de locações
+- Gestão de documentação
+
+### Processo de Locação
+- Reserva e agendamento
+- Contrato de locação
+- Verificação de disponibilidade
+- Cálculo automático de valores
+
+### Sistema de Notificações
+- Notificações em tempo real para usuários
+- Centro de notificações integrado à interface
+- Controle de leitura e notificações não lidas
+- Envio administrativo de notificações aos usuários
+- Otimizado para performance com grandes volumes de dados
+
+### Administração de Usuários
+- Gerenciamento de contas e permissões
+- Perfis de acesso (Administrador e Usuário)
+- Controle granular de permissões 

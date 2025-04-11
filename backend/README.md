@@ -106,6 +106,38 @@ http://localhost:8080/actuator
 
 Métricas são expostas no formato Prometheus para integração com sistemas de monitoramento.
 
+## Sistema de Notificações
+
+O sistema implementa um mecanismo completo de notificações para comunicação entre a plataforma e os usuários:
+
+### Características
+- Armazenamento persistente de notificações no banco de dados
+- Marcação de notificações como lidas/não lidas
+- Contagem de notificações não lidas
+- Paginação para otimização de performance
+- Interface para administradores enviarem notificações aos usuários
+
+### Entidades e Repositórios
+- `Notification`: Entidade principal com título, conteúdo, status de leitura, data e usuário de destino
+- `NotificationRepository`: Interface JPA com métodos otimizados para busca e contagem
+
+### Serviços
+- `NotificationService`: Gerencia notificações do usuário autenticado
+- `SystemNotificationService`: Permite que administradores enviem notificações de sistema
+
+### Endpoints de API
+- `GET /api/notifications`: Lista notificações do usuário autenticado (paginadas)
+- `GET /api/notifications/unread-count`: Retorna a contagem de notificações não lidas
+- `PATCH /api/notifications/{id}/read`: Marca uma notificação específica como lida
+- `PATCH /api/notifications/read-all`: Marca todas as notificações do usuário como lidas
+- `POST /admin/users/{id}/notify`: Permite administradores enviarem notificações a um usuário específico
+
+### Implementação Técnica
+- Transações garantem consistência dos dados
+- Validação de permissões em todos os endpoints
+- Otimização de consultas para alta performance, mesmo com grande volume de notificações
+- Log apenas para erros, minimizando overhead e garantindo segurança
+
 ## Gerenciamento de Usuários
 
 O sistema implementa um gerenciamento de usuários com as seguintes características:
